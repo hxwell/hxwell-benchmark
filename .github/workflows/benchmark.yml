@@ -30,10 +30,10 @@ jobs:
           haxelib install hxjava 4.2.0 --always --quiet
           python -m bench fetch --names hxwell,hxwell-crossbyte,crossbyte,emitter,wrk
           make -C dependencies/wrk -j2 WITH_OPENSSL=/usr VER=4.2.0
-      - name: Build the same driver with error logging enabled
+      - name: Build the proposed driver configuration with health counters
         run: python -m bench build --case jvm-crossbyte
-      - name: Build bare Crossbyte and run controlled comparisons
-        run: python tests/diagnosis/run.py
+      - name: Compare proposed limits with default and benchmark I/O runtimes
+        run: python tests/diagnosis/user_config.py
       - name: Preserve diagnosis evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

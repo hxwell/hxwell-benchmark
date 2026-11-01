@@ -12,10 +12,13 @@ class InstanceConfig implements IConfig {
             throw new haxe.Exception("The libuv benchmark requires native libuv support");
         #end
         return [hx.well.http.driver.crossbyte.CrossbyteInstance.builder()
-            .setHost("127.0.0.1").setPort(Settings.port).setPoolSize(Settings.workers)
-            .setMaxConnections(Settings.connections).setMaxConcurrentRequests(Settings.connections)
+            .setHost("127.0.0.1").setPort(Settings.port).setPoolSize(16)
+            .setMaxConnections(10000).setMaxConcurrentRequests(2000)
             .configureHttp(http -> {
-                http.runtimeCount = Std.parseInt(Sys.getEnv("DIAG_RUNTIMES") ?? Std.string(Settings.workers));
+                // Leave the upstream default untouched for the user's example;
+                // the second comparison explicitly restores the benchmark's 2.
+                var runtimes = Sys.getEnv("DIAG_RUNTIMES");
+                if(runtimes != null) http.runtimeCount = Std.parseInt(runtimes);
                 http.rateLimitKey = _ -> null;
                 http.compression.enabled = false;
                 http.keepAliveMaxRequests = 0;
