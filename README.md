@@ -240,9 +240,10 @@ python3 -m bench vendor-crossbyte --source /path/to/hxwell-crossbyte
 
 HashLink uses HL/JIT bytecode (`.hl`) with the official 1.16.0 runtime pinned to
 [`c3f2a15`](https://github.com/HaxeFoundation/hashlink/tree/c3f2a1563cf7aa9f4076b0808a7eaf40e18e8f14).
-The measurement runner builds the VM, core library, `fmt.hdll` and `ssl.hdll`
+The measurement runner builds the VM, core library, `fmt.hdll`, `ssl.hdll`, `mysql.hdll` and `sqlite.hdll`
 from that source on Linux x86-64. PCRE2 and mbedTLS come from the pinned source;
-image/audio dependencies of `fmt.hdll` use Ubuntu system libraries. The harness
+image/audio dependencies of `fmt.hdll` and SQLite use Ubuntu system libraries.
+The SQL modules satisfy HxWell imports; these workloads perform no database I/O. The harness
 verifies the executable version and SHA-256 of every runtime file, records the
 provenance, and checks the live HashLink target and JIT mode through `/health`.
 See the [official HashLink target documentation](https://haxe.org/manual/target-hl-getting-started.html).
@@ -278,7 +279,7 @@ python3 -m bench run --cases jvm-socket,jvm-crossbyte \
   --profile smoke --wrk "$PWD/dependencies/wrk/wrk" --out out/local-smoke
 
 # HashLink JIT on Linux x86-64 (build once, then use the same VM for both drivers):
-# Requires build-essential, libpng-dev, libturbojpeg0-dev, libvorbis-dev and zlib1g-dev.
+# Requires build-essential, libpng-dev, libturbojpeg0-dev, libvorbis-dev, zlib1g-dev and libsqlite3-dev.
 python3 -m bench hashlink --out out/hashlink
 export PATH="$PWD/out/hashlink:$PATH"
 python3 -m bench build --case hl-socket --haxe /path/to/haxe-4.3.7/haxe

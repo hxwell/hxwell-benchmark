@@ -157,7 +157,7 @@ jobs:
       - name: Build and verify the pinned HashLink JIT runtime
         if: contains(needs.plan.outputs.matrix, '"target":"hl"')
         run: |
-          sudo apt-get install -y libpng-dev libturbojpeg0-dev libvorbis-dev zlib1g-dev
+          sudo apt-get install -y libpng-dev libturbojpeg0-dev libvorbis-dev zlib1g-dev libsqlite3-dev
           python -m bench fetch --names hashlink
           python -m bench hashlink --out out/hashlink
           echo "$GITHUB_WORKSPACE/out/hashlink" >> "$GITHUB_PATH"

@@ -9,7 +9,7 @@ import tempfile
 from .dependencies import capture, command, sha256, verify_repository
 
 
-RUNTIME_FILES = ("hl", "hl-bin", "libhl.so", "fmt.hdll", "ssl.hdll")
+RUNTIME_FILES = ("hl", "hl-bin", "libhl.so", "fmt.hdll", "ssl.hdll", "mysql.hdll", "sqlite.hdll")
 LAUNCHER = '''#!/bin/sh
 HASHLINK_BENCH_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 export LD_LIBRARY_PATH="$HASHLINK_BENCH_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
@@ -52,7 +52,7 @@ def build_runtime(lock, dependencies, output):
     work = Path(tempfile.mkdtemp(prefix="hashlink-build-", dir=output.parent))
     shutil.copytree(source, work, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".git"))
     with (output / "build.log").open("w") as log:
-        command(["make", "-j2", "hl", "fmt.hdll", "ssl.hdll", "SSL_STATIC=1"],
+        command(["make", "-j2", "hl", "fmt.hdll", "ssl.hdll", "mysql.hdll", "sqlite.hdll", "SSL_STATIC=1"],
                 cwd=work, stdout=log, stderr=subprocess.STDOUT, timeout=600)
     shutil.copy2(work / "hl", output / "hl-bin")
     for name in RUNTIME_FILES[2:]:
