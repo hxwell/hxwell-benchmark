@@ -30,7 +30,7 @@ class ProbeMain {
         host.advance(0);
         CrossByte.make(POLL, HEAP, runtime -> runtime.addEventListener(Event.INIT, _ -> {
             var config = new HTTPServerConfig("127.0.0.1", Std.parseInt(Sys.getEnv("BENCH_PORT")));
-            config.maxConnections = 4000;
+            config.maxConnections = Std.parseInt(Sys.getEnv("DIAG_MAX_CONNECTIONS") ?? "4000");
             config.runtimeCount = Std.parseInt(Sys.getEnv("DIAG_RUNTIMES") ?? "2");
             config.rateLimitKey = _ -> null;
             config.compression.enabled = false;

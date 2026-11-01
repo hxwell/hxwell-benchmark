@@ -65,8 +65,8 @@ def tcp_counters():
     return result
 
 
-def run_case(kind, runtimes, repetition, cpus):
-    label = f"{kind}-io{runtimes}-r{repetition}"
+def run_case(kind, runtimes, repetition, cpus, connections=1000, waiting=None):
+    label = f"{kind}-io{runtimes}-c{connections}-q{waiting}-r{repetition}"
     directory = OUT / label
     directory.mkdir()
     with socket.socket() as listener:
@@ -74,7 +74,7 @@ def run_case(kind, runtimes, repetition, cpus):
         port = listener.getsockname()[1]
     token = uuid.uuid4().hex
     env = dict(os.environ, BENCH_PORT=str(port), BENCH_WORKERS="2", BENCH_MAX_CONNECTIONS="4000", BENCH_RUN_ID=token,
-               DIAG_RUNTIMES=str(runtimes), DIAG_MODE=kind)
+               DIAG_RUNTIMES=str(runtimes), DIAG_MODE=kind, DIAG_MAX_CONNECTIONS="32000", DIAG_WAITING=str(waiting or 256))
     args = ["java", "-XX:ActiveProcessorCount=2", "-Djdk.virtualThreadScheduler.parallelism=2", "-Xms256m", "-Xmx256m"]
     if kind == "driver":
         cwd = ROOT / "out/build/jvm-crossbyte"
@@ -83,7 +83,7 @@ def run_case(kind, runtimes, repetition, cpus):
         cwd = directory
         args += ["-jar", str(OUT / "probe.jar")]
     record = {"label": label, "kind": kind, "runtimes": runtimes, "repetition": repetition, "command": pinned(args, cpus["server"]),
-              "phases": [], "tcp_before": tcp_counters()}
+              "connections": connections, "waiting_limit": waiting or 256, "phases": [], "tcp_before": tcp_counters()}
     with (directory / "server.log").open("w") as log:
         process = subprocess.Popen(pinned(args, cpus["server"]), cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
         try:
@@ -100,9 +100,9 @@ def run_case(kind, runtimes, repetition, cpus):
                     time.sleep(.1)
             else:
                 raise TimeoutError("Readiness timed out")
-            for phase, seconds in (("warmup", 5), ("measure", 10)):
+            for phase, seconds in (("warmup", 3), ("measure", 5)):
                 started = time.time()
-                data = load(ROOT / "dependencies/wrk/wrk", process, port, {"id": "plaintext", "path": "/plaintext"}, 1000, 2, seconds,
+                data = load(ROOT / "dependencies/wrk/wrk", process, port, {"id": "plaintext", "path": "/plaintext"}, connections, 2, seconds,
                             cpus["client"], directory / (phase + ".log"), 10)
                 entry = {"phase": phase, "started_at": started, "finished_at": time.time(), **data}
                 if phase == "measure":
@@ -157,17 +157,15 @@ def build_original():
 
 def main():
     prepare()
-    build_original()
-    exact_benchmark()
     cpus = affinity()
     if len(cpus["server"]) != 2 or len(cpus["client"]) < 2:
         raise RuntimeError("This controlled diagnosis requires at least 4 CPUs")
     data = {"affinity": cpus, "java": subprocess.check_output(["java", "-version"], stderr=subprocess.STDOUT, text=True),
             "somaxconn": Path("/proc/sys/net/core/somaxconn").read_text().strip(), "cases": []}
-    scenarios = [("buffered", 2), ("posted-stream", 2)]
-    for kind, runtimes in scenarios:
+    scenarios = [(1000, 256), (1000, 4096), (4000, 256), (4000, 4096)]
+    for connections, waiting in scenarios:
         for repetition in (1, 2):
-            data["cases"].append(run_case(kind, runtimes, repetition, cpus))
+            data["cases"].append(run_case("buffered", 2, repetition, cpus, connections, waiting))
             (OUT / "results.json").write_text(json.dumps(data, indent=2) + "\n")
     shutil.copy2(ROOT / "dependencies.lock.json", OUT / "dependencies.lock.json")
 
