@@ -15,7 +15,7 @@ class InstanceConfig implements IConfig {
             .setHost("127.0.0.1").setPort(Settings.port).setPoolSize(Settings.workers)
             .setMaxConnections(Settings.connections).setMaxConcurrentRequests(Settings.connections)
             .configureHttp(http -> {
-                http.runtimeCount = Settings.workers;
+                http.runtimeCount = Std.parseInt(Sys.getEnv("DIAG_RUNTIMES") ?? Std.string(Settings.workers));
                 http.rateLimitKey = _ -> null;
                 http.compression.enabled = false;
                 http.keepAliveMaxRequests = 0;

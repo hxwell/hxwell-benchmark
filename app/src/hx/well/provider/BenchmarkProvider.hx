@@ -10,13 +10,21 @@ import hx.well.route.Route;
 class BenchmarkProvider extends AbstractProvider {
     public function boot():Void {
         // Suppress per-request traces equally for all stock driver implementations.
-        haxe.Log.trace = (_, ?position) -> {};
+        haxe.Log.trace = (value, ?position) -> {
+            if(position != null && position.className == "hx.well.http.driver.crossbyte.CrossbyteDriver") {
+                Sys.stderr().writeString("DRIVER_ERROR " + Sys.time() + " " + Std.string(value) + "\n");
+                Sys.stderr().writeString(haxe.CallStack.toString(haxe.CallStack.exceptionStack()) + "\n");
+                Sys.stderr().flush();
+            }
+        };
         #if bench_crossbyte
-        crossbyte.utils.Logger.level = crossbyte.utils.LogLevel.OFF;
+        crossbyte.utils.Logger.level = crossbyte.utils.LogLevel.WARN;
+        crossbyte.utils.Logger.timestamps = true;
+        crossbyte.utils.Logger.sink = line -> { Sys.stderr().writeString(line + "\n"); Sys.stderr().flush(); };
         #end
         Route.get("/health", req -> (new JsonResponse({
             run_id:Settings.runId, case_id:Settings.caseId, driver:Settings.driver,
-            target:Settings.target, workers:Settings.workers,
+            target:Settings.target, workers:Settings.workers, diagnosis:benchapp.DriverStats.read(req),
             cpp_runtime:Settings.cppRuntime, cpp_runtime_version:Settings.cppRuntimeVersion,
             poll_backend:benchapp.BackendProbe.inspect(req), libuv_version:benchapp.BackendProbe.libuvVersion(),
             virtual_thread:#if jvm jvm.thread.VirtualThread.VirtualThreadExtern.currentThread().isVirtual() #else false #end
