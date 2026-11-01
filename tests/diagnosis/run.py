@@ -105,12 +105,14 @@ def run_case(kind, runtimes, repetition, cpus):
                 data = load(ROOT / "dependencies/wrk/wrk", process, port, {"id": "plaintext", "path": "/plaintext"}, 1000, 2, seconds,
                             cpus["client"], directory / (phase + ".log"), 10)
                 entry = {"phase": phase, "started_at": started, "finished_at": time.time(), **data}
-                try:
-                    entry["health_after"] = json.loads(request(port, "/health")[0])
-                except Exception as error:
-                    entry["health_error"] = str(error)
+                if phase == "measure":
+                    try:
+                        entry["health_after"] = json.loads(request(port, "/health")[0])
+                    except Exception as error:
+                        entry["health_error"] = str(error)
                 record["phases"].append(entry)
-                print(label, phase, data["wrk"]["errors"], round(data["rps"]), entry.get("health_after"), flush=True)
+                if phase == "measure":
+                    print(label, phase, data["wrk"]["errors"], round(data["rps"]), entry.get("health_after"), flush=True)
         except Exception as error:
             record["error"] = str(error)
         finally:
@@ -122,14 +124,47 @@ def run_case(kind, runtimes, repetition, cpus):
     return record
 
 
+def exact_benchmark():
+    # Exercise the original controller, including the immediate handoff from
+    # the warmup client to a fresh measurement client and all three routes.
+    env = dict(os.environ, DIAG_RUNTIMES="2")
+    config = [sys.executable, "-m", "bench", "run", "--cases", "jvm-crossbyte", "--profile", "stress",
+              "--wrk", str(ROOT / "dependencies/wrk/wrk")]
+    results = []
+    for kind, build in (("diagnostic", ROOT / "out/build"), ("original", ROOT / "out/original-build")):
+        output = OUT / ("exact-" + kind)
+        with (OUT / ("exact-" + kind + ".log")).open("w") as log:
+            done = subprocess.run(config + ["--bundles", str(build), "--out", str(output)], cwd=ROOT,
+                                  env=env, stdout=log, stderr=subprocess.STDOUT)
+        results.append({"kind": kind, "exit_code": done.returncode})
+        print("EXACT", kind, done.returncode, flush=True)
+    (OUT / "exact-exit-codes.json").write_text(json.dumps(results, indent=2))
+
+
+def build_original():
+    names = ("app/src/hx/well/provider/BenchmarkProvider.hx", "app/src/hx/well/config/InstanceConfig.hx")
+    saved = {name:(ROOT / name).read_bytes() for name in names}
+    try:
+        for name in names:
+            (ROOT / name).write_bytes(subprocess.check_output(["git", "show", "23ea850:" + name], cwd=ROOT))
+        with (OUT / "original-build.log").open("w") as log:
+            command([sys.executable, "-m", "bench", "build", "--case", "jvm-crossbyte", "--out", ROOT / "out/original-build"],
+                    cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+    finally:
+        for name, data in saved.items():
+            (ROOT / name).write_bytes(data)
+
+
 def main():
     prepare()
+    build_original()
+    exact_benchmark()
     cpus = affinity()
     if len(cpus["server"]) != 2 or len(cpus["client"]) < 2:
         raise RuntimeError("This controlled diagnosis requires at least 4 CPUs")
     data = {"affinity": cpus, "java": subprocess.check_output(["java", "-version"], stderr=subprocess.STDOUT, text=True),
             "somaxconn": Path("/proc/sys/net/core/somaxconn").read_text().strip(), "cases": []}
-    scenarios = [("driver", 2), ("buffered", 2), ("stream", 2), ("posted-stream", 2), ("buffered", 0), ("driver", 0)]
+    scenarios = [("buffered", 2), ("posted-stream", 2)]
     for kind, runtimes in scenarios:
         for repetition in (1, 2):
             data["cases"].append(run_case(kind, runtimes, repetition, cpus))

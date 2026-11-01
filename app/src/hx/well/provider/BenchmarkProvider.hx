@@ -11,7 +11,7 @@ class BenchmarkProvider extends AbstractProvider {
     public function boot():Void {
         // Suppress per-request traces equally for all stock driver implementations.
         haxe.Log.trace = (value, ?position) -> {
-            if(position != null && position.className == "hx.well.http.driver.crossbyte.CrossbyteDriver") {
+            if(position != null && (position.className == "hx.well.http.driver.crossbyte.CrossbyteDriver" || (position.className == "hx.well.http.HttpHandler" && position.lineNumber != 230 && position.lineNumber != 235))) {
                 Sys.stderr().writeString("DRIVER_ERROR " + Sys.time() + " " + Std.string(value) + "\n");
                 Sys.stderr().writeString(haxe.CallStack.toString(haxe.CallStack.exceptionStack()) + "\n");
                 Sys.stderr().flush();
