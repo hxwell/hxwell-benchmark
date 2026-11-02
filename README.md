@@ -146,7 +146,7 @@ preflights but are not individually inspected during load. See the upstream
 
 ## Focused JVM virtual-runtime comparison
 
-[Run #17](https://github.com/hxwell/hxwell-benchmark/actions/runs/41388256606)
+[Run #16](https://github.com/hxwell/hxwell-benchmark/actions/runs/41388256606)
 compared the two Crossbyte cases on one AMD EPYC runner with two server CPUs
 and two separate client CPUs: Java 21, 1,000 connections, 5 s warmup, 10 s
 measurement and three repetitions. All 18 trials had zero client errors; neither
