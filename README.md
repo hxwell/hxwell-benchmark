@@ -3,32 +3,30 @@
 <!-- benchmark-charts:start -->
 ## Summary
 
-**Incomplete / failed** · [Run #20 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/41538587495) · profile `stress` · 87/90 valid trials.
-Source: [`60814ea`](https://github.com/hxwell/hxwell-benchmark/commit/60814eabbb0a5e0c500911fbed44c9e4fa31a425). Finished: `2026-11-02T23:04:45.724946+00:00`.
+**Complete** · [Run #22 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490) · profile `stress` · 90/90 valid trials.
+Source: [`60ef5f4`](https://github.com/hxwell/hxwell-benchmark/commit/60ef5f48dd6f3bcbc01d742908d3e0504b816c31). Finished: `2026-11-02T23:57:29.836134+00:00`.
 
-Incomplete or failed run; invalid groups have no score.
+All selected measurements passed.
 
-![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=41538587495-1&layout=4)
+![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=41545569490-1&layout=4)
 
 Each chart shows throughput, p99 latency and peak RSS for plaintext, JSON and echo. Case colors are consistent across views; each target uses its own axis scales for detail. Workloads and connection levels remain separate.
 
-84 valid trials belong to complete groups and are eligible for scoring; a group with a missing or failed repetition has no bar.
-
 ## JVM
 
-![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=41538587495-1&layout=4)
+![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=41545569490-1&layout=4)
 
 ## HashLink / HL-JIT
 
-![HashLink / HL-JIT benchmark results](docs/benchmarks/latest/target-hl.svg?run=41538587495-1&layout=4)
+![HashLink / HL-JIT benchmark results](docs/benchmarks/latest/target-hl.svg?run=41545569490-1&layout=4)
 
 ## JavaScript / Node
 
-![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=41538587495-1&layout=4)
+![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=41545569490-1&layout=4)
 
 ## C++ / libhxcpp
 
-![C++ / libhxcpp benchmark results](docs/benchmarks/latest/target-cpp.svg?run=41538587495-1&layout=4)
+![C++ / libhxcpp benchmark results](docs/benchmarks/latest/target-cpp.svg?run=41545569490-1&layout=4)
 
 [Chart data and provenance](docs/benchmarks/latest/manifest.json) · Full raw results are in the linked run's `benchmark-results` artifact.
 Only the selected targets, cases and connection levels from this run are shown; older runs are not mixed into these charts.
