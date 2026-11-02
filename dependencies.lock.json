@@ -15,7 +15,7 @@
     },
     "crossbyte-jvm-virtual": {
       "url": "https://github.com/hxwell/crossbyte.git",
-      "revision": "82a68cbc1c90fe1a65130431b775de56ecfad2de"
+      "revision": "183eee1e0229bb0b727b45d0a5ce24a18054e2a2"
     },
     "emitter": {
       "url": "https://github.com/Dimensionscape/Emitter.git",
