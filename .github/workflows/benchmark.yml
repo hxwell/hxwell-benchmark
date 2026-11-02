@@ -110,6 +110,46 @@ jobs:
           if [ "$TARGET" = cpp ]; then NAMES="$NAMES,libhxcpp"; fi
           if [ "$POLL_BACKEND" = libuv ]; then NAMES="$NAMES,crossbyte-libuv,libuv"; fi
           python -m bench fetch --names "$NAMES"
+      - name: Verify updated driver features on virtual I/O threads
+        if: matrix.crossbyte_variant == 'jvm-virtual'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libsqlite3-0 openssl
+          haxelib install utest 1.13.2 --always --quiet
+          python - <<'PYDRIVER'
+          from pathlib import Path
+          import shlex, shutil
+          from bench.config import load_config
+          from bench.dependencies import fetch_repository
+          _, lock = load_config()
+          work = Path('out/driver-verification').resolve()
+          work.mkdir(parents=True, exist_ok=True)
+          fetch_repository(work / 'source', lock['repositories']['hxwell-crossbyte'])
+          compiler = shutil.which('haxe')
+          if compiler is None:
+              raise RuntimeError('Haxe compiler is missing')
+          wrapper = work / 'haxe-virtual'
+          wrapper.write_text('#!/bin/sh\nexec ' + shlex.quote(compiler) + ' -D crossbyte_jvm_virtual_threads "$@"\n')
+          wrapper.chmod(0o755)
+          PYDRIVER
+          python -m pip install -r out/driver-verification/source/tests/requirements.txt
+          python out/driver-verification/source/tests/run.py --target jvm \
+            --hxwell dependencies/hxwell --crossbyte dependencies/crossbyte-jvm-virtual \
+            --emitter dependencies/emitter --haxe "$GITHUB_WORKSPACE/out/driver-verification/haxe-virtual"
+          python out/driver-verification/source/tests/core.py --target jvm \
+            --hxwell dependencies/hxwell --crossbyte dependencies/crossbyte-jvm-virtual \
+            --emitter dependencies/emitter --haxe "$GITHUB_WORKSPACE/out/driver-verification/haxe-virtual"
+      - name: Preserve virtual-driver compatibility reports
+        if: always() && matrix.crossbyte_variant == 'jvm-virtual'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: virtual-driver-compatibility
+          retention-days: 14
+          path: |
+            out/driver-verification/source/out/*.json
+            out/driver-verification/source/out/**/build.log
+            out/driver-verification/source/out/**/server.log
+            out/driver-verification/source/out/**/test.log
       - name: Build release application
         env:
           BENCH_CASE: ${{ matrix.id }}

@@ -147,6 +147,8 @@ def verify_bundle(bundle, case):
         raise ValueError("Benchmark configuration changed after building")
     if case["driver"] == "crossbyte":
         _, lock = load_config()
+        if metadata.get("repositories", {}).get("hxwell-crossbyte") != lock["repositories"]["hxwell-crossbyte"]:
+            raise ValueError("Crossbyte driver source provenance does not match the current locked adapter")
         if metadata.get("crossbyte_repository") != lock["repositories"][crossbyte_repository_name(case)]:
             raise ValueError("Crossbyte source provenance does not match the requested implementation")
     for name, expected in metadata["files"].items():
