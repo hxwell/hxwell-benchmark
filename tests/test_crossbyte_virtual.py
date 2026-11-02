@@ -39,13 +39,19 @@ class VirtualCrossbyteTests(unittest.TestCase):
                 metadata = {"case": case, "build_os": platform.system(), "build_arch": platform.machine(),
                             "workloads_sha256": sha256(Path(__file__).resolve().parents[1] / "benchmark.json"),
                             "files": {"server.jar": sha256(root / "server.jar")},
-                            "crossbyte_repository": lock["repositories"][source]}
+                            "crossbyte_repository": lock["repositories"][source],
+                            "repositories": {"hxwell-crossbyte": lock["repositories"]["hxwell-crossbyte"]}}
                 (root / "build.json").write_text(json.dumps(metadata))
                 verify_bundle(root, case)
                 other = "crossbyte" if source == "crossbyte-jvm-virtual" else "crossbyte-jvm-virtual"
                 metadata["crossbyte_repository"] = lock["repositories"][other]
                 (root / "build.json").write_text(json.dumps(metadata))
                 with self.assertRaisesRegex(ValueError, "source provenance"):
+                    verify_bundle(root, case)
+                metadata["crossbyte_repository"] = lock["repositories"][source]
+                metadata["repositories"]["hxwell-crossbyte"] = {**lock["repositories"]["hxwell-crossbyte"], "revision": "f" * 40}
+                (root / "build.json").write_text(json.dumps(metadata))
+                with self.assertRaisesRegex(ValueError, "driver source provenance"):
                     verify_bundle(root, case)
 
     def test_virtual_fork_cannot_be_selected_for_other_targets_or_thread_modes(self):

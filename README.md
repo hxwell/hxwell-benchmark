@@ -62,6 +62,13 @@ wrong linked libuv version invalidates the measurement. No driver source is
 patched for benchmarking. PHP's development server and unsupported
 target/driver combinations are not silently substituted for these cases.
 
+The current driver snapshot uses a single asynchronous handoff for complete
+responses up to 32 KiB, and a blocking request queue for C++/HashLink workers.
+The virtual-I/O build also runs the driver's existing HTTP/1.1, HTTP/2, TLS,
+WebSocket, framework-feature and core/security regression suites against the
+pinned fork before producing its benchmark bundle. Its compatibility reports
+are saved separately from the performance results.
+
 The common workloads are GET plaintext, GET freshly serialized JSON and POST
 JSON parsing/echo. They use the ordinary `hx.well.HxWell` application startup,
 configuration, providers, routes and driver interfaces. Middleware is explicitly
@@ -144,7 +151,14 @@ HTTP status errors for responses above 399; redirects are rejected by the
 preflights but are not individually inspected during load. See the upstream
 [wrk scripting API](https://github.com/wg/wrk/blob/4.2.0/SCRIPTING).
 
-## Focused JVM virtual-runtime comparison
+## Historical JVM virtual-runtime comparisons
+
+These archived comparisons used adapter commit `c08ad42`. The current benchmark
+uses the updated adapter `58d39ce`, whose small-response path sends a complete
+response in one asynchronous runtime handoff. The upstream and virtual-I/O
+cases both use that updated adapter with the same limits. Current measurements
+are in the generated charts above; the archived numbers below describe the old
+adapter and are retained with their original source provenance.
 
 [Run #16](https://github.com/hxwell/hxwell-benchmark/actions/runs/41388256606)
 compared the two Crossbyte cases on one AMD EPYC runner with two server CPUs
@@ -263,10 +277,9 @@ official Maven artifacts. Node's native `deasync` dependency uses
 `app/package-lock.json`. Builds create a local Haxelib repository in a temporary
 build directory; they do not change global dev registrations.
 
-`hxwell-crossbyte` is a private dependency. Its exact runtime sources at the
+`hxwell-crossbyte` is included as a versioned snapshot. Its runtime sources at the
 locked commit are stored under `vendor/hxwell-crossbyte`, with the original
-license and per-file SHA-256 provenance in `snapshot.json`. This lets this private
-benchmark repo run CI without a cross-repository access token. The vendored
+license and per-file SHA-256 provenance in `snapshot.json`. This keeps the driver source and its checksums self-contained for CI. The vendored
 adapter is compiled as its own Haxelib package. Changes to it are made upstream,
 then refreshed as a reviewed snapshot:
 

@@ -1,4 +1,4 @@
-"""Versioned runtime snapshot for the private hxwell-crossbyte dependency."""
+"""Versioned runtime snapshot for the hxwell-crossbyte dependency."""
 import json
 from pathlib import Path
 import subprocess
