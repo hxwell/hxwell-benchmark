@@ -144,6 +144,28 @@ HTTP status errors for responses above 399; redirects are rejected by the
 preflights but are not individually inspected during load. See the upstream
 [wrk scripting API](https://github.com/wg/wrk/blob/4.2.0/SCRIPTING).
 
+## Focused JVM virtual-runtime comparison
+
+[Run #17](https://github.com/hxwell/hxwell-benchmark/actions/runs/41388256606)
+compared the two Crossbyte cases on one AMD EPYC runner with two server CPUs
+and two separate client CPUs: Java 21, 1,000 connections, 5 s warmup, 10 s
+measurement and three repetitions. All 18 trials had zero client errors; neither
+client was saturated. Both application handlers were virtual; the I/O owner was
+confirmed platform for upstream and virtual for the fork.
+
+| Workload | Upstream req/s | Fork req/s | Throughput change | Upstream p99 | Fork p99 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Plaintext | 23,431 | 27,507 | +17.4% | 91.08 ms | 85.95 ms |
+| JSON | 24,747 | 28,909 | +16.8% | 59.97 ms | 56.51 ms |
+| Echo | 22,818 | 27,835 | +22.0% | 67.82 ms | 53.86 ms |
+
+Throughput and p99 are medians of three trials. Peak process-group RSS stayed
+about 357–361 MiB for both implementations. These numbers describe this paired
+run; the current all-target charts above are regenerated independently.
+[Samples, settings and source provenance](docs/benchmarks/comparisons/jvm-virtual-runtime-41388256606.json)
+record the measured fork commit and show that its runtime sources are identical
+to the subsequently pinned fork commit, which only corrects a JVM test assertion.
+
 ## Profiles
 
 | Profile | Warmup per trial | Measurement | Repetitions | Connections | Request timeout | Use |
