@@ -153,6 +153,13 @@ HTTP status errors for responses above 399; redirects are rejected by the
 preflights but are not individually inspected during load. See the upstream
 [wrk scripting API](https://github.com/wg/wrk/blob/4.2.0/SCRIPTING).
 
+The Crossbyte runtime is pinned to upstream `45628a5`; the virtual-I/O fork
+merges that same upstream base and adds only its runtime-thread option. This
+base includes the connection-handoff backpressure fix: when every child queue
+is full, new connections wait in the kernel's listen queue instead of being
+accepted and immediately closed. Workload, concurrency and connection limits
+are unchanged.
+
 ## Historical JVM virtual-runtime comparisons
 
 These archived comparisons used adapter commit `c08ad42`. The current benchmark

@@ -11,11 +11,11 @@
     },
     "crossbyte": {
       "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
-      "revision": "acc6de8994e0292ae48706017a2eafa4acbaedbf"
+      "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
     },
     "crossbyte-jvm-virtual": {
       "url": "https://github.com/hxwell/crossbyte.git",
-      "revision": "183eee1e0229bb0b727b45d0a5ce24a18054e2a2"
+      "revision": "3d234864b926958d09f43f1fad765604e086d0c4"
     },
     "emitter": {
       "url": "https://github.com/Dimensionscape/Emitter.git",
