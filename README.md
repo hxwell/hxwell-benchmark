@@ -277,7 +277,7 @@ official Maven artifacts. Node's native `deasync` dependency uses
 `app/package-lock.json`. Builds create a local Haxelib repository in a temporary
 build directory; they do not change global dev registrations.
 
-`hxwell-crossbyte` is a private dependency. Its exact runtime sources at the
+`hxwell-crossbyte` is included as a versioned snapshot. Its runtime sources at the
 locked commit are stored under `vendor/hxwell-crossbyte`, with the original
 license and per-file SHA-256 provenance in `snapshot.json`. This keeps the driver source and its checksums self-contained for CI. The vendored
 adapter is compiled as its own Haxelib package. Changes to it are made upstream,
