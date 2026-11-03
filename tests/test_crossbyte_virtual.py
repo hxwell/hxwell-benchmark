@@ -61,7 +61,7 @@ class VirtualCrossbyteTests(unittest.TestCase):
             root = Path(directory)
             (root / "dependencies.lock.json").write_text(json.dumps(lock))
             variants = [{**fork, field: wrong} for field, wrong in
-                        (("target", "hl"), ("driver", "socket"), ("crossbyte_variant", "unknown"), ("io_threads", "platform"))]
+                        (("target", "cpp"), ("driver", "socket"), ("crossbyte_variant", "unknown"), ("io_threads", "platform"))]
             variants.append({key: value for key, value in fork.items() if key != "io_threads"})
             for bad in variants:
                 (root / "benchmark.json").write_text(json.dumps({**config, "cases": [bad]}))

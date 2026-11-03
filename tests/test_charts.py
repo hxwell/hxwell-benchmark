@@ -12,7 +12,7 @@ from bench.publish import ApiError, newer_than, publish, trusted_environment
 
 
 def config():
-    return {"cases": [{"id": "jvm-socket", "target": "jvm"}, {"id": "hl-socket", "target": "hl"}], "workloads": [{"id": "plaintext"}, {"id": "json"}],
+    return {"cases": [{"id": "jvm-socket", "target": "jvm"}, {"id": "cpp-socket", "target": "cpp"}], "workloads": [{"id": "plaintext"}, {"id": "json"}],
             "profiles": {"ci": {"warmup_seconds": 1, "duration_seconds": 2, "repetitions": 2, "connections": [16], "performance_run": True},
                          "smoke": {"warmup_seconds": 1, "duration_seconds": 1, "repetitions": 1, "connections": [4], "performance_run": False},
                          "full": {"warmup_seconds": 1, "duration_seconds": 2, "repetitions": 2, "connections": [16, 64], "performance_run": True},
@@ -125,9 +125,9 @@ class ChartTests(unittest.TestCase):
         self.assertTrue(changed.endswith("\nHuman ending\n"))
         self.assertIn("summary.svg?run=102-1", changed)
         self.assertLess(changed.index("## Summary"), changed.index("## JVM"))
-        self.assertLess(changed.index("## JVM"), changed.index("## HashLink / HL-JIT"))
+        self.assertLess(changed.index("## JVM"), changed.index("## C++ / libhxcpp"))
         self.assertIn("target-jvm.svg?run=102-1", changed)
-        self.assertIn("target-hl.svg?run=102-1", changed)
+        self.assertIn("target-cpp.svg?run=102-1", changed)
         self.assertEqual(1, changed.count(START))
         self.assertEqual(changed, replace_readme(changed, value()))
         for invalid in ("no markers", START + START + END, END + START):
@@ -156,7 +156,7 @@ class ChartTests(unittest.TestCase):
         data = dashboard(report(), cfg, metadata(), "success")
         views = chart_views(data)
         self.assertEqual(["summary.svg", "target-jvm.svg"], [v["filename"] for v in views])
-        self.assertEqual(["jvm-socket", "hl-socket"], views[1]["cases"])
+        self.assertEqual(["jvm-socket", "cpp-socket"], views[1]["cases"])
         for name in ("../README", "jvm/other", "", "a.svg", "x\\n"):
             with self.assertRaises(ValueError):
                 target_filename(name)
@@ -164,7 +164,7 @@ class ChartTests(unittest.TestCase):
     def test_target_svgs_contain_only_their_cases_and_all_metrics(self):
         with tempfile.TemporaryDirectory() as directory:
             render(value(), directory)
-            for target, other in (("jvm", "hl"), ("hl", "jvm")):
+            for target, other in (("jvm", "cpp"), ("cpp", "jvm")):
                 text = (Path(directory) / f"target-{target}.svg").read_text()
                 self.assertIn(f"{target}-socket", text)
                 self.assertNotIn(f"{other}-socket", text)
@@ -180,7 +180,7 @@ class ChartTests(unittest.TestCase):
             subset = dashboard(report(selection=["jvm-socket"]), config(), metadata(), "success", selection="jvm-socket")
             render(subset, root)
             self.assertEqual({"summary.svg", "target-jvm.svg", "manifest.json", "notes.txt"}, {p.name for p in root.iterdir()})
-            self.assertNotIn("## HashLink / HL-JIT", replace_readme(START + END, subset))
+            self.assertNotIn("## C++ / libhxcpp", replace_readme(START + END, subset))
             self.assertEqual("human notes", (root / "notes.txt").read_text())
 
     def test_unavailable_memory_is_not_zero(self):
@@ -266,13 +266,13 @@ class PublishTests(unittest.TestCase):
 
     def test_publication_removes_only_existing_obsolete_generated_charts(self):
         subset = dashboard(report(selection=["jvm-socket"]), config(), metadata(), "success", selection="jvm-socket")
-        api = FakeApi(existing=("summary.svg", "target-jvm.svg", "target-neko.svg", "throughput.svg", "notes.svg", "manifest.json"))
+        api = FakeApi(existing=("summary.svg", "target-jvm.svg", "target-neko.svg", "target-hl.svg", "throughput.svg", "notes.svg", "manifest.json"))
         with tempfile.TemporaryDirectory() as directory:
             self.assets(directory, subset)
             publish(api, subset, directory)
         tree = next(payload for method, path, payload in api.calls if method == "POST" and path.endswith("/git/trees"))
         removed = {entry["path"] for entry in tree["tree"] if entry.get("sha", "present") is None}
-        self.assertEqual({f"{ASSET_PATH}/target-neko.svg", f"{ASSET_PATH}/throughput.svg"}, removed)
+        self.assertEqual({f"{ASSET_PATH}/target-neko.svg", f"{ASSET_PATH}/target-hl.svg", f"{ASSET_PATH}/throughput.svg"}, removed)
         self.assertFalse(any(entry["path"].endswith("notes.svg") for entry in tree["tree"]))
 
     def test_non_fast_forward_retry_preserves_concurrent_readme_edit(self):

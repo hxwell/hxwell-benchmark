@@ -12,7 +12,7 @@ def load_config():
     if len(ids) != len(set(ids)) or any(not re.fullmatch(r"[a-z][a-z0-9-]+", value) for value in ids):
         raise ValueError("Case IDs must be unique safe names")
     for case in config["cases"]:
-        if case["target"] not in ("jvm", "hl", "js", "cpp"):
+        if case["target"] not in ("jvm", "js", "cpp"):
             raise ValueError(f"Unsupported benchmark target: {case['target']}")
         if "crossbyte_variant" in case and (case["target"] != "jvm" or case["driver"] != "crossbyte"
                                              or case["crossbyte_variant"] != "jvm-virtual"):

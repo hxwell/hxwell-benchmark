@@ -46,8 +46,6 @@ set of claimed performance numbers.
 | `jvm-undertow` | JVM | Undertow | XNIO worker pool |
 | `jvm-crossbyte` | JVM | Upstream Crossbyte | Virtual requests, platform I/O runtime |
 | `jvm-crossbyte-virtual` | JVM | HxWell Crossbyte fork | Virtual requests and virtual I/O runtime |
-| `hl-socket` | HashLink / HL-JIT | HxWell Socket | Platform-thread pool |
-| `hl-crossbyte` | HashLink / HL-JIT | Crossbyte | Worker pool, separate I/O runtimes |
 | `js-nodehttp` | JavaScript/Node | NodeHTTP | Cluster workers |
 | `cpp-socket` | C++/libhxcpp | HxWell Socket | Platform-thread pool |
 | `cpp-crossbyte` | C++/libhxcpp | Crossbyte | Worker pool, built-in polling |
@@ -63,7 +61,7 @@ patched for benchmarking. PHP's development server and unsupported
 target/driver combinations are not silently substituted for these cases.
 
 The current driver snapshot uses a single asynchronous handoff for complete
-responses up to 32 KiB, and a blocking request queue for C++/HashLink workers.
+responses up to 32 KiB, and a blocking request queue for C++ workers.
 The virtual-I/O build also runs the driver's existing HTTP/1.1, HTTP/2, TLS,
 WebSocket, framework-feature and core/security regression suites against the
 pinned fork before producing its benchmark bundle. Its compatibility reports
@@ -85,8 +83,8 @@ requests, and manual dispatch:
    Thus the comparison is not assembled from differently loaded matrix runners.
 4. Warm up each workload, measure repeated trials, and preserve raw results plus
    a JSON/CSV/Markdown summary in the `benchmark-results` artifact and job summary.
-5. Generate one combined summary SVG, followed by separate JVM, HashLink,
-   JavaScript/Node and C++ charts for the selected targets. Each chart includes
+5. Generate one combined summary SVG, followed by separate JVM, JavaScript/Node
+   and C++ charts for the selected targets. Each chart includes
    throughput, p99 latency and peak RSS, with separate workload/connection panels
    and consistent case colors across views. Target charts use their own axis scales
    to keep within-target differences visible. A separate publishing job
@@ -162,8 +160,8 @@ are unchanged.
 
 [Run #22](https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490)
 uses adapter `58d39ce`, upstream runtime `45628a5` and the same-base virtual-I/O
-fork `3d23486`. All 90 stress trials passed, including 9/9 for each JVM variant
-and 9/9 for HashLink Crossbyte. The run used 1,000 connections and three repeats.
+fork `3d23486`. All 90 stress trials passed, including 9/9 for each JVM variant.
+The recorded run used 1,000 connections and three repeats.
 
 | Workload | Platform I/O req/s | Virtual I/O req/s | Median change | Platform p99 | Virtual p99 |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -234,7 +232,7 @@ do not run on a recurring schedule. In manual dispatch, choose a profile and
 `stress` maintains **1,000 concurrent HTTP/1.1 connections** for every selected
 case and workload. Throughput is measured independently in requests/second.
 The longer request timeout allows queueing under this load; errors/timeouts still
-invalidate a trial. Running all ten cases produces 90 trials and about 23 minutes
+invalidate a trial. Running all eight cases produces 72 trials and about 18 minutes
 of warmup/load, plus startup and reporting. The README and charts are updated by
 the selected profile's completed main-branch run.
 
@@ -316,16 +314,6 @@ then refreshed as a reviewed snapshot:
 python3 -m bench vendor-crossbyte --source /path/to/hxwell-crossbyte
 ```
 
-HashLink uses HL/JIT bytecode (`.hl`) with the official 1.16.0 runtime pinned to
-[`c3f2a15`](https://github.com/HaxeFoundation/hashlink/tree/c3f2a1563cf7aa9f4076b0808a7eaf40e18e8f14).
-The measurement runner builds the VM, core library, `fmt.hdll`, `ssl.hdll`, `mysql.hdll` and `sqlite.hdll`
-from that source on Linux x86-64. PCRE2 and mbedTLS come from the pinned source;
-image/audio dependencies of `fmt.hdll` and SQLite use Ubuntu system libraries.
-The SQL modules satisfy HxWell imports; these workloads perform no database I/O. The harness
-verifies the executable version and SHA-256 of every runtime file, records the
-provenance, and checks the live HashLink target and JIT mode through `/health`.
-See the [official HashLink target documentation](https://haxe.org/manual/target-hl-getting-started.html).
-
 The other source dependencies are fetched at immutable commits. A dirty or
 different existing dependency checkout is refused. Application artifacts include
 hashes and are transferred as tar archives to preserve executable modes.
@@ -356,15 +344,6 @@ python3 -m bench build --case jvm-crossbyte --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench run --cases jvm-socket,jvm-crossbyte \
   --profile smoke --wrk "$PWD/dependencies/wrk/wrk" --out out/local-smoke
 
-# HashLink JIT on Linux x86-64 (build once, then use the same VM for both drivers):
-# Requires build-essential, libpng-dev, libturbojpeg0-dev, libvorbis-dev, zlib1g-dev and libsqlite3-dev.
-python3 -m bench hashlink --out out/hashlink
-export PATH="$PWD/out/hashlink:$PATH"
-python3 -m bench build --case hl-socket --haxe /path/to/haxe-4.3.7/haxe
-python3 -m bench build --case hl-crossbyte --haxe /path/to/haxe-4.3.7/haxe
-python3 -m bench run --cases hl-socket,hl-crossbyte \
-  --profile ci --wrk "$PWD/dependencies/wrk/wrk" --out out/local-hashlink
-
 # Native C++ comparison, including the Crossbyte driver:
 python3 -m bench build --case cpp-socket --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case cpp-crossbyte --haxe /path/to/haxe-4.3.7/haxe
@@ -378,7 +357,7 @@ On macOS, supply the installed OpenSSL prefix to `WITH_OPENSSL` (for example
 behavior only. Choose a fresh output directory for each measurement; the harness
 refuses to overwrite existing results or bundles. All traffic is loopback, and
 cleanup signals only the process groups created by the harness, never `pkill`
-or unrelated Java/Node/HashLink processes.
+or unrelated Java/Node processes.
 
 ## Render charts locally
 

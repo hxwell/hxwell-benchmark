@@ -6,8 +6,6 @@
     {"id": "jvm-undertow", "target": "jvm", "driver": "undertow", "dispatch": "XNIO worker pool"},
     {"id": "jvm-crossbyte", "target": "jvm", "driver": "crossbyte", "io_threads": "platform", "dispatch": "virtual requests + platform I/O runtime"},
     {"id": "jvm-crossbyte-virtual", "target": "jvm", "driver": "crossbyte", "crossbyte_variant": "jvm-virtual", "io_threads": "virtual", "dispatch": "virtual requests + virtual I/O runtime"},
-    {"id": "hl-socket", "target": "hl", "driver": "socket", "dispatch": "platform-thread pool"},
-    {"id": "hl-crossbyte", "target": "hl", "driver": "crossbyte", "dispatch": "worker pool + I/O runtimes"},
     {"id": "js-nodehttp", "target": "js", "driver": "nodehttp", "dispatch": "Node cluster workers"},
     {"id": "cpp-socket", "target": "cpp", "driver": "socket", "dispatch": "platform-thread pool"},
     {"id": "cpp-crossbyte", "target": "cpp", "driver": "crossbyte", "poll_backend": "builtin", "dispatch": "worker pool + I/O runtimes"},
