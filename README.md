@@ -158,6 +158,27 @@ is full, new connections wait in the kernel's listen queue instead of being
 accepted and immediately closed. Workload, concurrency and connection limits
 are unchanged.
 
+## Current-driver JVM comparison
+
+[Run #22](https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490)
+uses adapter `58d39ce`, upstream runtime `45628a5` and the same-base virtual-I/O
+fork `3d23486`. All 90 stress trials passed, including 9/9 for each JVM variant
+and 9/9 for HashLink Crossbyte. The run used 1,000 connections and three repeats.
+
+| Workload | Platform I/O req/s | Virtual I/O req/s | Median change | Platform p99 | Virtual p99 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Plaintext | 40,885 | 42,648 | +4.3% | 65.52 ms | 49.28 ms |
+| JSON | 41,604 | 42,451 | +2.0% | 43.49 ms | 42.55 ms |
+| Echo | 37,613 | 38,127 | +1.4% | 47.62 ms | 47.98 ms |
+
+Both cases used virtual HTTP application handlers. The actual I/O owner was
+probed before and after each trial: platform for upstream, virtual for the fork.
+Neither client was saturated. Repeat ranges overlap, so the small median
+throughput differences do not establish a consistent speed advantage. Peak RSS
+was about 257–273 MiB; the virtual case used roughly 1–6 MiB more by workload.
+[Raw samples, settings and current source provenance](docs/benchmarks/comparisons/driver58-sdk456-jvm-41545569490.json)
+are retained separately from the older-driver comparisons below.
+
 ## Historical JVM virtual-runtime comparisons
 
 These archived comparisons used adapter commit `c08ad42`. The current benchmark

@@ -1,0 +1,153 @@
+{
+  "run": {
+    "repository": "hxwell/hxwell-benchmark",
+    "id": 41545569490,
+    "number": 22,
+    "attempt": 1,
+    "source_sha": "60ef5f48dd6f3bcbc01d742908d3e0504b816c31",
+    "url": "https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490"
+  },
+  "driver_repository": {
+    "url": "https://github.com/hxwell/hxwell-crossbyte.git",
+    "revision": "58d39ce73fda4ea13a07f4f2cae87a24b032ec0d",
+    "vendored": true
+  },
+  "runtime_sources": {
+    "jvm-crossbyte": {
+      "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+      "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+    },
+    "jvm-crossbyte-virtual": {
+      "url": "https://github.com/hxwell/crossbyte.git",
+      "revision": "3d234864b926958d09f43f1fad765604e086d0c4"
+    }
+  },
+  "hardware": {
+    "os": "Linux",
+    "release": "7.0.0-1017-azure",
+    "arch": "x86_64",
+    "logical_cpus": 4,
+    "cpu_model": "AMD EPYC 7763 64-Core Processor",
+    "memory": "MemTotal:       16367524 kB",
+    "cpuset.cpus.effective": "0-3"
+  },
+  "affinity": {
+    "enabled": true,
+    "server": [
+      0,
+      1
+    ],
+    "client": [
+      2,
+      3
+    ]
+  },
+  "profile": {
+    "warmup_seconds": 5,
+    "duration_seconds": 10,
+    "repetitions": 3,
+    "connections": [
+      1000
+    ],
+    "request_timeout_seconds": 10,
+    "performance_run": true
+  },
+  "settings": {
+    "server_workers": 2,
+    "client_threads": 2,
+    "protocol": "HTTP/1.1",
+    "middleware": "none",
+    "compression": "identity",
+    "request_timeout_seconds": 10,
+    "file_descriptor_limits": {
+      "soft_before": 65536,
+      "soft_after": 65536,
+      "hard": 65536,
+      "required": 2256
+    }
+  },
+  "java": "openjdk version \"21.0.13\" 2026-10-20 LTS",
+  "valid_trials": 90,
+  "comparison_trials": 18,
+  "results": [
+    {
+      "workload": "plaintext",
+      "jvm-crossbyte": {
+        "rps": 40885.121684252714,
+        "rps_samples": [
+          40885.121684252714,
+          40748.30760663383,
+          44089.120068043885
+        ],
+        "p99_ms": 65.524,
+        "peak_rss_mib": 261.109375,
+        "client_saturated": false
+      },
+      "jvm-crossbyte-virtual": {
+        "rps": 42648.1495830344,
+        "rps_samples": [
+          42648.1495830344,
+          40758.6005022416,
+          43692.665872523175
+        ],
+        "p99_ms": 49.285,
+        "peak_rss_mib": 261.8984375,
+        "client_saturated": false
+      },
+      "rps_delta_percent": 4.312150303470252
+    },
+    {
+      "workload": "json",
+      "jvm-crossbyte": {
+        "rps": 41603.741990376264,
+        "rps_samples": [
+          41603.741990376264,
+          42607.464471822546,
+          39552.8236504924
+        ],
+        "p99_ms": 43.491,
+        "peak_rss_mib": 256.80859375,
+        "client_saturated": false
+      },
+      "jvm-crossbyte-virtual": {
+        "rps": 42450.52742389584,
+        "rps_samples": [
+          42529.588924053496,
+          42450.52742389584,
+          39032.64051414571
+        ],
+        "p99_ms": 42.549,
+        "peak_rss_mib": 262.46484375,
+        "client_saturated": false
+      },
+      "rps_delta_percent": 2.0353588235294984
+    },
+    {
+      "workload": "echo",
+      "jvm-crossbyte": {
+        "rps": 37613.19494103154,
+        "rps_samples": [
+          37499.45647409747,
+          38364.194651571204,
+          37613.19494103154
+        ],
+        "p99_ms": 47.623,
+        "peak_rss_mib": 269.984375,
+        "client_saturated": false
+      },
+      "jvm-crossbyte-virtual": {
+        "rps": 38127.338679795874,
+        "rps_samples": [
+          37717.68709511343,
+          38127.338679795874,
+          38355.89937934965
+        ],
+        "p99_ms": 47.982,
+        "peak_rss_mib": 273.3984375,
+        "client_saturated": false
+      },
+      "rps_delta_percent": 1.3669238669312245
+    }
+  ],
+  "interpretation": "Median differences are modest and repeat ranges overlap; this run does not establish a consistent speed advantage."
+}
