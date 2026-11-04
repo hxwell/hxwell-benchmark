@@ -139,11 +139,11 @@ class HarnessTests(unittest.TestCase):
         case = {"id": "cpp-crossbyte-libuv", "target": "cpp", "driver": "crossbyte", "poll_backend": "libuv"}
         metadata = {"libraries": {"libhxcpp": "6.0.0"}, "native_libraries": {"libuv": {"version": "1.51.0"}}}
         health = {"run_id": "owned", "case_id": case["id"], "target": "cpp", "driver": "crossbyte", "workers": 1,
-                  "haxe_version": "4.3.7", "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
+                  "haxe_version": "4.3.7", "virtual_thread": False, "cpp_lto": True, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
                   "poll_backend": "libuv", "libuv_version": "1.51.0"}
         validate_health(health, case, 1, "owned", metadata)
         for key, bad in (("poll_backend", "builtin-fallback"), ("poll_backend", None), ("libuv_version", "1.48.0"),
-                         ("cpp_runtime", "hxcpp"), ("cpp_runtime_version", "4.3.0"), ("virtual_thread", True),
+                         ("cpp_lto", False), ("cpp_lto", None), ("cpp_runtime", "hxcpp"), ("cpp_runtime_version", "4.3.0"), ("virtual_thread", True),
                          ("run_id", "another-process")):
             with self.assertRaises(RuntimeError):
                 validate_health({**health, key: bad}, case, 1, "owned", metadata)
@@ -153,7 +153,7 @@ class HarnessTests(unittest.TestCase):
         metadata = {"libraries": {"libhxcpp": "6.0.0"}, "native_libraries": {"libuv": {"version": "1.51.0"}}}
         for case in (c for c in config["cases"] if c["target"] == "cpp"):
             health = {"run_id": "owned", "case_id": case["id"], "target": "cpp", "driver": case["driver"], "workers": 1,
-                      "haxe_version": "4.3.7", "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
+                      "haxe_version": "4.3.7", "virtual_thread": False, "cpp_lto": True, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
                       "poll_backend": case.get("poll_backend", "not-applicable"), "libuv_version": "1.51.0"}
             validate_health(health, case, 1, "owned", metadata)
             with self.assertRaises(RuntimeError):

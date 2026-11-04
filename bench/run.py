@@ -20,6 +20,7 @@ from .dependencies import sha256
 from .metrics import ProcessMeter
 from .report import write_reports
 from .loadgen import verify_wrk
+from .lto import validate_evidence
 
 MARKER = "HXWELL_BENCH_JSON "
 
@@ -149,6 +150,11 @@ def verify_bundle(bundle, case):
         raise ValueError("Build OS/architecture does not match measurement host")
     if metadata["workloads_sha256"] != sha256(ROOT / "benchmark.json"):
         raise ValueError("Benchmark configuration changed after building")
+    if case["target"] == "cpp":
+        if case.get("lto") is not True or not validate_evidence(metadata.get("native_optimization")):
+            raise ValueError("Missing verified C++ LTO compiler/linker evidence")
+        if case.get("poll_backend") == "libuv" and metadata.get("native_libraries", {}).get("libuv", {}).get("lto", {}).get("ipo") is not True:
+            raise ValueError("Missing verified libuv IPO/LTO evidence")
     if case["driver"] == "crossbyte":
         _, lock = load_config()
         if metadata.get("repositories", {}).get("hxwell-crossbyte") != lock["repositories"]["hxwell-crossbyte"]:
@@ -177,6 +183,8 @@ def validate_health(health, case, workers, token, metadata):
         if health.get("io_virtual_thread") is not expected_io_virtual:
             raise RuntimeError("Crossbyte request I/O runtime has the wrong actual JVM thread type")
     if case["target"] == "cpp":
+        if health.get("cpp_lto") is not True:
+            raise RuntimeError("C++ application did not attest LTO compilation")
         version = metadata.get("libraries", {}).get("libhxcpp")
         if not version or health.get("cpp_runtime") != "libhxcpp" or health.get("cpp_runtime_version") != version:
             raise RuntimeError("C++ benchmark did not use the pinned libhxcpp runtime")

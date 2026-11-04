@@ -12,6 +12,8 @@ def load_config():
     if len(ids) != len(set(ids)) or any(not re.fullmatch(r"[a-z][a-z0-9-]+", value) for value in ids):
         raise ValueError("Case IDs must be unique safe names")
     for case in config["cases"]:
+        if (case["target"] == "cpp" and case.get("lto") is not True) or (case["target"] != "cpp" and "lto" in case):
+            raise ValueError("LTO is required for all C++ cases and is not a setting for other targets")
         selected_haxe = compiler_version(config, case)
         if selected_haxe not in ("4.3.7", "5.0.0-preview.1"):
             raise ValueError("Unsupported benchmark Haxe version")

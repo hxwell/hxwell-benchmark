@@ -7,9 +7,9 @@
     {"id": "jvm-crossbyte", "target": "jvm", "driver": "crossbyte", "io_threads": "platform", "dispatch": "virtual requests + platform I/O runtime"},
     {"id": "jvm-crossbyte-virtual", "target": "jvm", "driver": "crossbyte", "crossbyte_variant": "jvm-virtual", "io_threads": "virtual", "dispatch": "virtual requests + virtual I/O runtime"},
     {"id": "js-nodehttp", "target": "js", "driver": "nodehttp", "dispatch": "Node cluster workers"},
-    {"id": "cpp-socket", "target": "cpp", "driver": "socket", "dispatch": "platform-thread pool"},
-    {"id": "cpp-crossbyte", "target": "cpp", "driver": "crossbyte", "poll_backend": "builtin", "dispatch": "worker pool + I/O runtimes"},
-    {"id": "cpp-crossbyte-libuv", "target": "cpp", "driver": "crossbyte", "poll_backend": "libuv", "dispatch": "worker pool + libuv I/O runtimes"},
+    {"id": "cpp-socket", "target": "cpp", "driver": "socket", "dispatch": "platform-thread pool", "lto": true},
+    {"id": "cpp-crossbyte", "target": "cpp", "driver": "crossbyte", "poll_backend": "builtin", "dispatch": "worker pool + I/O runtimes", "lto": true},
+    {"id": "cpp-crossbyte-libuv", "target": "cpp", "driver": "crossbyte", "poll_backend": "libuv", "dispatch": "worker pool + libuv I/O runtimes", "lto": true},
     {"id":"jvm-crossbyte5","target":"jvm","driver":"crossbyte","haxe_version":"5.0.0-preview.1","io_threads":"platform","dispatch":"Haxe 5 preview 1 / virtual requests + platform I/O runtime"}
   ],
   "workloads": [

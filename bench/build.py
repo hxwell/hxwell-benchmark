@@ -9,6 +9,7 @@ import tempfile
 import time
 
 from .config import ROOT, crossbyte_repository_name, compiler_version
+from .lto import cpp_defines, verify_link, verify_libuv
 from .dependencies import capture, command, local_haxelib, sha256, verify_repository
 
 
@@ -18,7 +19,7 @@ def build_libuv(deps, work, lock, log):
     verify_repository(source, lock["repositories"]["libuv"])
     build_dir, prefix = work / "libuv-build", work / "native-deps/libuv"
     command(["cmake", "-S", source, "-B", build_dir, "-DCMAKE_BUILD_TYPE=Release",
-             "-DLIBUV_BUILD_SHARED=OFF", "-DLIBUV_BUILD_TESTS=OFF", "-DLIBUV_BUILD_BENCH=OFF",
+             "-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON", "-DLIBUV_BUILD_SHARED=OFF", "-DLIBUV_BUILD_TESTS=OFF", "-DLIBUV_BUILD_BENCH=OFF",
              "-DBUILD_TESTING=OFF", "-DCMAKE_INSTALL_LIBDIR=lib", f"-DCMAKE_INSTALL_PREFIX={prefix}"],
             stdout=log, stderr=subprocess.STDOUT, timeout=120)
     command(["cmake", "--build", build_dir, "--target", "uv_a", "--parallel", "2"],
@@ -28,7 +29,7 @@ def build_libuv(deps, work, lock, log):
     if not archive.is_file() or not (prefix / "include/uv.h").is_file():
         raise ValueError("Expected a static libuv installation")
     return prefix, {"version": "1.51.0", "linkage": "static", "archive_sha256": sha256(archive),
-                    "revision": lock["repositories"]["libuv"]["revision"]}
+                    "revision": lock["repositories"]["libuv"]["revision"], "lto": verify_libuv(build_dir)}
 
 
 def build(config, lock, case, deps, output, haxe="haxe"):
@@ -68,6 +69,8 @@ def build(config, lock, case, deps, output, haxe="haxe"):
         launch = ["node", "--max-old-space-size=256", "server.js"]
     elif target == "cpp":
         args += ["-lib", "libhxcpp", "--cpp", "native"]
+        for define in cpp_defines(case):
+            args += ["-D", define]
         launch = ["./server"]
     else:
         raise ValueError(f"Unsupported target: {target}")
@@ -84,7 +87,8 @@ def build(config, lock, case, deps, output, haxe="haxe"):
             args += ["-lib", "crossbyte-libuv", "-D", "bench_libuv", "-D", "crossbyte_libuv_native",
                      "-D", f"LIBUV_INCLUDE={prefix / 'include'}", "-D", f"LIBUV_LIB={prefix / 'lib'}"]
         (work / "command.json").write_text(json.dumps(args, indent=2) + "\n")
-        command(args, cwd=work, stdout=log, stderr=subprocess.STDOUT, timeout=900)
+        command(args, cwd=work, stdout=log, stderr=subprocess.STDOUT, timeout=1800 if target == "cpp" else 900)
+    optimization = verify_link(work / "native") if target == "cpp" else None
     destination.mkdir()
     for directory in ("public", "cache", "session"):
         (destination / directory).mkdir()
@@ -105,6 +109,7 @@ def build(config, lock, case, deps, output, haxe="haxe"):
     files = {str(path.relative_to(destination)): sha256(path) for path in destination.rglob("*") if path.is_file()}
     metadata = {"schema_version": 1, "case": case, "command": launch, "haxe_version": expected_haxe,
                 "build_seconds": time.monotonic() - started, "build_os": platform.system(), "build_arch": platform.machine(),
+                "native_optimization": optimization,
                 "repositories": lock["repositories"], "libraries": libraries, "native_libraries": native_libraries, "files": files,
                 "build_command": args, "workloads_sha256": sha256(ROOT / "benchmark.json"),
                 "haxelib_source_checksums": lock.get("haxelib_source_checksums", {}),

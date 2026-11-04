@@ -57,6 +57,17 @@ wrong linked libuv version invalidates the measurement. No driver source is
 patched for benchmarking. PHP's development server and unsupported
 target/driver combinations are not silently substituted for these cases.
 
+All three C++ cases require **LTO**: the Haxe-generated code and libhxcpp runtime
+are compiled with `HXCPP_OPTIMIZE_LINK`, and the executable linker explicitly
+uses `-flto -O2`. The static libuv library additionally requires CMake IPO.
+Build verification checks generated and runtime object IR plus native LTO linker
+outputs; a define alone is insufficient. These checks and compiler/source
+provenance are retained in `build.json` and `results.json`. `/health` must also
+attest the LTO build flag. Legacy C++ bundles without this evidence are rejected.
+GCC builds retain LTRANS objects; macOS builds retain the combined native LTO
+object emitted by Apple's linker. C++ build jobs have a 35-minute budget for
+compilation and LTO linking.
+
 The current driver snapshot uses a single asynchronous handoff for complete
 responses up to 32 KiB, and a blocking request queue for C++ workers.
 The virtual-I/O and Haxe 5 builds also run the driver's existing HTTP/1.1, HTTP/2, TLS,
@@ -383,7 +394,7 @@ haxelib install hxnodejs 12.2.0
 python3 -m pip install -r requirements-charts.txt
 python3 -m bench fetch
 python3 -m bench build-wrk --openssl /usr
-HXWELL_TEST_WRK="$PWD/out/wrk/wrk" python3 -m unittest discover -s tests -v
+HXWELL_TEST_LTO=1 HXWELL_TEST_WRK="$PWD/out/wrk/wrk" python3 -m unittest discover -s tests -v
 
 python3 -m bench build --case jvm-socket --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case jvm-crossbyte --haxe /path/to/haxe-4.3.7/haxe

@@ -17,7 +17,7 @@ class BenchmarkProvider extends AbstractProvider {
         Route.get("/health", req -> (new JsonResponse({
             run_id:Settings.runId, case_id:Settings.caseId, driver:Settings.driver,
             target:Settings.target, workers:Settings.workers, haxe_version:haxe.macro.Compiler.getDefine("haxe"),
-            cpp_runtime:Settings.cppRuntime, cpp_runtime_version:Settings.cppRuntimeVersion,
+            cpp_lto:Settings.cppLto, cpp_runtime:Settings.cppRuntime, cpp_runtime_version:Settings.cppRuntimeVersion,
             io_virtual_thread:benchapp.BackendProbe.ioVirtualThread(req),
             poll_backend:benchapp.BackendProbe.inspect(req), libuv_version:benchapp.BackendProbe.libuvVersion(),
             virtual_thread:#if jvm jvm.thread.VirtualThread.VirtualThreadExtern.currentThread().isVirtual() #else false #end

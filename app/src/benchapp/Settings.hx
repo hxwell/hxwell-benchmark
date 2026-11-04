@@ -1,5 +1,8 @@
 package benchapp;
 
+#if cpp
+@:buildXml("<linker id='exe'><flag value='-flto' if='HXCPP_OPTIMIZE_LINK'/><flag value='-O2' if='HXCPP_OPTIMIZE_LINK'/><flag value='-save-temps' if='linux HXCPP_OPTIMIZE_LINK'/><flag value='-Wl,-object_path_lto,lto-link.o' if='macos HXCPP_OPTIMIZE_LINK'/></linker>")
+#end
 class Settings {
     public static var port:Int = integer("BENCH_PORT", 3000, 1, 65535);
     public static var workers:Int = integer("BENCH_WORKERS", 2, 1, 256);
@@ -8,6 +11,7 @@ class Settings {
     public static var caseId:String = haxe.macro.Compiler.getDefine("bench_case");
     public static var driver:String = haxe.macro.Compiler.getDefine("bench_driver");
     public static var target:String = #if jvm "jvm" #elseif js "js" #elseif cpp "cpp" #else "unsupported" #end;
+    public static var cppLto:Bool = #if (cpp && HXCPP_OPTIMIZE_LINK) true #else false #end;
     public static var cppRuntime:String = #if (cpp && libhxcpp) "libhxcpp" #elseif cpp "hxcpp" #else "" #end;
     public static var cppRuntimeVersion:String = #if (cpp && libhxcpp) haxe.macro.Compiler.getDefine("libhxcpp") #else "" #end;
 
