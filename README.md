@@ -46,8 +46,9 @@ set of claimed performance numbers.
 | `cpp-socket` | C++/libhxcpp | HxWell Socket | Platform-thread pool |
 | `cpp-crossbyte` | C++/libhxcpp | Crossbyte | Worker pool, built-in polling |
 | `cpp-crossbyte-libuv` | C++/libhxcpp | Crossbyte + libuv | Worker pool, libuv polling |
+| `jvm-crossbyte5` | JVM / Haxe 5.0.0-preview.1 | Upstream Crossbyte | Virtual requests, platform I/O runtime |
 
-The actual target, driver, worker count and JVM virtual-thread state are checked
+The actual compiler version, target, driver, worker count and JVM virtual-thread state are checked
 through `/health`; a mismatched build is never measured. Every C++ case must
 report the pinned `libhxcpp` version. Crossbyte C++ cases inspect the actual
 request I/O runtime before and after each trial: the built-in case must stay on
@@ -58,10 +59,21 @@ target/driver combinations are not silently substituted for these cases.
 
 The current driver snapshot uses a single asynchronous handoff for complete
 responses up to 32 KiB, and a blocking request queue for C++ workers.
-The virtual-I/O build also runs the driver's existing HTTP/1.1, HTTP/2, TLS,
+The virtual-I/O and Haxe 5 builds also run the driver's existing HTTP/1.1, HTTP/2, TLS,
 WebSocket, framework-feature and core/security regression suites against the
-pinned fork before producing its benchmark bundle. Its compatibility reports
-are saved separately from the performance results.
+selected runtime before producing their benchmark bundles. Their compatibility
+reports are saved separately from the performance results.
+
+`jvm-crossbyte5` pins Haxe **5.0.0-preview.1** and `hx4compat` **1.0.0**.
+It uses the same adapter source, upstream Crossbyte commit, Java 21, heap limits,
+request limits and I/O settings as `jvm-crossbyte` (Haxe 4.3.7). A Haxe-5-only
+classpath supplies type aliases for moved Java primitive/class helpers and the
+legacy HTTP/2 secondary-type name; the runtime SDK is not patched. `/health`
+embeds the real compiler version through a compile-time macro and must agree
+with the build provenance. Both cases already hand requests to HxWell's
+`jvm.thread.VirtualThread.create(work).start()` entry before `HttpHandler.process()`.
+The driver uses explicit nullable status selection to preserve the default 200
+on Haxe 5 preview 1.
 
 The common workloads are GET plaintext, GET freshly serialized JSON and POST
 JSON parsing/echo. They use the ordinary `hx.well.HxWell` application startup,
@@ -117,7 +129,7 @@ default per-address rate limiter. Crossbyte's keep-alive request-count cap is
 disabled for this load test. All cases request HTTP/1.1 keep-alive and identity
 encoding; this is not an HTTP/2, TLS, WebSocket or full middleware benchmark.
 
-Both JVM Crossbyte cases use `maxConnections=10000`, `maxConcurrentRequests=2000`,
+All JVM Crossbyte cases use `maxConnections=10000`, `maxConcurrentRequests=2000`,
 `poolSize=16` and `runtimeCount=0`, with per-address rate limiting disabled.
 Connections stay on the listener's I/O runtime, avoiding the bounded connection
 handoff queue under connection bursts; HxWell requests still run on virtual
@@ -162,7 +174,7 @@ is full, new connections wait in the kernel's listen queue instead of being
 accepted and immediately closed. Workload, concurrency and connection limits
 are unchanged.
 
-## Current-driver JVM comparison
+## Historical driver-58 JVM comparison
 
 [Run #22](https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490)
 uses adapter `58d39ce`, upstream runtime `45628a5` and the same-base virtual-I/O
@@ -180,13 +192,13 @@ probed before and after each trial: platform for upstream, virtual for the fork.
 Neither client was saturated. Repeat ranges overlap, so the small median
 throughput differences do not establish a consistent speed advantage. Peak RSS
 was about 257–273 MiB; the virtual case used roughly 1–6 MiB more by workload.
-[Raw samples, settings and current source provenance](docs/benchmarks/comparisons/driver58-sdk456-jvm-41545569490.json)
+[Raw samples, settings and source provenance for that run](docs/benchmarks/comparisons/driver58-sdk456-jvm-41545569490.json)
 are retained separately from the older-driver comparisons below.
 
 ## Historical JVM virtual-runtime comparisons
 
 These archived comparisons used adapter commit `c08ad42`. The current benchmark
-uses the updated adapter `58d39ce`, whose small-response path sends a complete
+uses adapter `a010ebf`, which retains the small-response path introduced in `58d39ce` and sends a complete
 response in one asynchronous runtime handoff. The upstream and virtual-I/O
 cases both use that updated adapter with the same limits. Current measurements
 are in the generated charts above; the archived numbers below describe the old
@@ -238,7 +250,7 @@ do not run on a recurring schedule. In manual dispatch, choose a profile and
 `stress` maintains **1,000 concurrent HTTP/1.1 connections** for every selected
 case and workload. Throughput is measured independently in requests/second.
 The longer request timeout allows queueing under this load; errors/timeouts still
-invalidate a trial. Running all eight cases produces 72 trials and about 18 minutes
+invalidate a trial. Running all nine cases produces 81 trials and about 20 minutes
 of warmup/load, plus startup and reporting. The README and charts are updated by
 the selected profile's completed main-branch run.
 
@@ -326,7 +338,7 @@ hashes and are transferred as tar archives to preserve executable modes.
 
 ## Run locally
 
-Use Python 3.12+, Haxe **4.3.7**, Git, the selected runtimes and wrk 4.2.0 on a
+Use Python 3.12+, Haxe **4.3.7** (or **5.0.0-preview.1** for `jvm-crossbyte5`), Git, the selected runtimes and the strict wrk build on a
 POSIX host. Node builds use Node 22.13.0 and npm; JVM runs require Java 21+.
 C++ builds require a C++ compiler, and the libuv case also requires CMake.
 `bench fetch` downloads the locked libhxcpp and libuv sources; `bench build`
@@ -347,6 +359,8 @@ HXWELL_TEST_WRK="$PWD/out/wrk/wrk" python3 -m unittest discover -s tests -v
 
 python3 -m bench build --case jvm-socket --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case jvm-crossbyte --haxe /path/to/haxe-4.3.7/haxe
+# Optional compiler comparison (also install hx4compat 1.0.0):
+python3 -m bench build --case jvm-crossbyte5 --haxe /path/to/haxe-5.0.0-preview.1/haxe
 python3 -m bench run --cases jvm-socket,jvm-crossbyte \
   --profile smoke --wrk "$PWD/out/wrk/wrk" --out out/local-smoke
 

@@ -92,6 +92,8 @@ def local_haxelib(work, deps, lock, case):
     names = ["haxe-concurrent", "uuid", "crypto"]
     if case["target"] == "jvm":
         names += ["hxjava"]
+    if case.get("haxe_version", "").startswith("5."):
+        names += ["hx4compat"]
     if case["target"] == "js":
         names += ["hxnodejs"]
     libraries = {name: library_path(name, lock["haxelib"][name]) for name in names}

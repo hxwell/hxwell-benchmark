@@ -14,7 +14,7 @@ def snapshot(lock, source):
     source = Path(source).resolve()
     capture(["git", "cat-file", "-e", revision + "^{commit}"], cwd=source)
     files = capture(["git", "ls-tree", "-r", "--name-only", revision], cwd=source).splitlines()
-    selected = [name for name in files if name.startswith("src/") or name in ("LICENSE", "haxelib.json", "extraParams.hxml")]
+    selected = [name for name in files if (name.startswith("src/") or name.startswith("compat/")) or name in ("LICENSE", "haxelib.json", "extraParams.hxml")]
     destination = ROOT / "vendor" / name
     if destination.exists():
         raise ValueError(f"Refusing to overwrite {destination}; review/remove the old snapshot before refreshing")

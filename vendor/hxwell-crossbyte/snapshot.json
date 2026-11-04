@@ -1,8 +1,13 @@
 {
   "repository": "https://github.com/hxwell/hxwell-crossbyte.git",
-  "revision": "58d39ce73fda4ea13a07f4f2cae87a24b032ec0d",
+  "revision": "a010ebfaaf6f9aaa4d3133de56e0c80f127ad843",
   "files": {
     "LICENSE": "e83404c7b618ea088f45c2e048105e40e371317ecc2e2b723e724f81a9424310",
+    "compat/haxe5/H2ServerConnection.hx": "68147b4c2c21a34a82a14aae378880b05964e1c541d3d58a7de7e60fd871538b",
+    "compat/haxe5/java/Lib.hx": "c2434b89f220a1859c78b189e1caa46f004898de6e545808bd771e2eb5b4f98d",
+    "compat/haxe5/java/StdTypes.hx": "dff9650e4cfd6d19ce7e9da853f17c6d278cc4641dc54f95e6cf211c3fbf8f7a",
+    "compat/haxe5/java/types/Char16.hx": "5622892ec6123394226eb748dbabe5dbba7bf4ea6af8950aa6b5f67a58a25721",
+    "compat/haxe5/java/types/Int8.hx": "5662ab46aa80fdfc497d85d73991526159c961afe3d5c77acb0254924b19e5ed",
     "extraParams.hxml": "37f86bc21cf05d4862642e3882b7d5e6d0a418c4b4418a9ec1dc73df7cde78b5",
     "haxelib.json": "5dcab5a506e7b5240cee8a8c91aa6923faef8b43ab281ffc71e8faf1361dc072",
     "src/hx/well/http/driver/crossbyte/CrossbyteDriver.hx": "a93db170e68a0588122a37895de85296d1b765311036e351841a0d9d4fa082df",
@@ -13,12 +18,12 @@
     "src/hx/well/http/driver/crossbyte/internal/DeflateWriter.hx": "c85f6f84c322b96a13c5281b871fe25cd1e8e613f421e75eccaf7480868b9c20",
     "src/hx/well/http/driver/crossbyte/internal/RequestValidation.hx": "8f14d0ba110d0cefaa73bed4433cef801fcf164224fa9951b454caa8ff15ecb8",
     "src/hx/well/http/driver/crossbyte/internal/ResponseBridge.hx": "94476999d78e049f3f387c96007d03ce4ffbe0069b489389ff431bfe1732e391",
-    "src/hx/well/http/driver/crossbyte/internal/ResponseHead.hx": "f0af36847b157518db8e52c7f22f180e25f1ee5e91d9be04151e08812fbcca74",
+    "src/hx/well/http/driver/crossbyte/internal/ResponseHead.hx": "5224807a6b3913e0c802b02243714fb757aa609b68e96723a2d014c6c2375910",
     "src/hx/well/http/driver/crossbyte/internal/RuntimeHost.hx": "b7cf28479d4f6e55bbab48c4908a43e561e5fb60ed554461e386fe9dbffb3c38",
     "src/hx/well/http/driver/crossbyte/internal/UpstreamAccess.hx": "f02aebb29156519ff54b16a67443c1fffb5aefb099143e3d2c00aa1227567881",
     "src/hx/well/http/driver/crossbyte/internal/UpstreamWebSocket.hx": "77412ca084ffd571fc5de85acc9338db2ba1179801f6643e1485e649a49fa7fe",
     "src/hx/well/http/driver/crossbyte/internal/WebSocketBridge.hx": "97679360cc54c81e87070f8da20270a647a45860e669e37e12ae4b2e5d8e3a2b",
     "src/hx/well/http/driver/crossbyte/internal/WorkerPool.hx": "fd8c7911c2971cd24ed0bc70b219fc77fd45b3498786a06a03c14c928da46fe6",
-    "src/hx/well/http/driver/crossbyte/macro/Compatibility.hx": "4c8e397edd2efaa4f8d1905be7e5c81939d03c85aae57a52ba2ebe422472264d"
+    "src/hx/well/http/driver/crossbyte/macro/Compatibility.hx": "f31a2348bbc35ea05e0cc47bdaebbda8784701c6d168e2fc8e9a803ae19ee61d"
   }
 }

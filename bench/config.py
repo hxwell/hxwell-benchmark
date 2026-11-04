@@ -12,6 +12,11 @@ def load_config():
     if len(ids) != len(set(ids)) or any(not re.fullmatch(r"[a-z][a-z0-9-]+", value) for value in ids):
         raise ValueError("Case IDs must be unique safe names")
     for case in config["cases"]:
+        selected_haxe = compiler_version(config, case)
+        if selected_haxe not in ("4.3.7", "5.0.0-preview.1"):
+            raise ValueError("Unsupported benchmark Haxe version")
+        if selected_haxe.startswith("5.") and (case["target"] != "jvm" or case["driver"] != "crossbyte" or "crossbyte_variant" in case):
+            raise ValueError("Haxe 5 preview is verified for the upstream JVM Crossbyte case only")
         if case["target"] not in ("jvm", "js", "cpp"):
             raise ValueError(f"Unsupported benchmark target: {case['target']}")
         if "crossbyte_variant" in case and (case["target"] != "jvm" or case["driver"] != "crossbyte"
@@ -42,3 +47,7 @@ def select_cases(config, selection="all"):
 
 def crossbyte_repository_name(case):
     return "crossbyte-jvm-virtual" if case.get("crossbyte_variant") == "jvm-virtual" else "crossbyte"
+
+
+def compiler_version(config, case):
+    return case.get("haxe_version", config["haxe_version"])

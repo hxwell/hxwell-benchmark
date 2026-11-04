@@ -84,7 +84,7 @@ class HarnessTests(unittest.TestCase):
 
     def test_matrix_is_explicit_and_rejects_unknown_or_duplicate_cases(self):
         config, lock = load_config()
-        self.assertEqual(8, len(select_cases(config)))
+        self.assertEqual(9, len(select_cases(config)))
         self.assertEqual({"jvm", "js", "cpp"}, {case["target"] for case in config["cases"]})
         self.assertEqual(["jvm-socket", "jvm-crossbyte-virtual", "cpp-crossbyte", "cpp-crossbyte-libuv"],
                          [c["id"] for c in select_cases(config, "jvm-socket,jvm-crossbyte-virtual,cpp-crossbyte,cpp-crossbyte-libuv")])
@@ -130,7 +130,7 @@ class HarnessTests(unittest.TestCase):
             (root / "dependencies.lock.json").write_text(json.dumps(lock))
             for key, bad in (("target", "jvm"), ("driver", "socket"), ("poll_backend", "unknown")):
                 changed = json.loads(json.dumps(config))
-                changed["cases"][-1][key] = bad
+                next(case for case in changed["cases"] if case["id"] == "cpp-crossbyte-libuv")[key] = bad
                 (root / "benchmark.json").write_text(json.dumps(changed))
                 with patch("bench.config.ROOT", root), self.assertRaises(ValueError):
                     load_config()
@@ -139,7 +139,7 @@ class HarnessTests(unittest.TestCase):
         case = {"id": "cpp-crossbyte-libuv", "target": "cpp", "driver": "crossbyte", "poll_backend": "libuv"}
         metadata = {"libraries": {"libhxcpp": "6.0.0"}, "native_libraries": {"libuv": {"version": "1.51.0"}}}
         health = {"run_id": "owned", "case_id": case["id"], "target": "cpp", "driver": "crossbyte", "workers": 1,
-                  "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
+                  "haxe_version": "4.3.7", "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
                   "poll_backend": "libuv", "libuv_version": "1.51.0"}
         validate_health(health, case, 1, "owned", metadata)
         for key, bad in (("poll_backend", "builtin-fallback"), ("poll_backend", None), ("libuv_version", "1.48.0"),
@@ -153,7 +153,7 @@ class HarnessTests(unittest.TestCase):
         metadata = {"libraries": {"libhxcpp": "6.0.0"}, "native_libraries": {"libuv": {"version": "1.51.0"}}}
         for case in (c for c in config["cases"] if c["target"] == "cpp"):
             health = {"run_id": "owned", "case_id": case["id"], "target": "cpp", "driver": case["driver"], "workers": 1,
-                      "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
+                      "haxe_version": "4.3.7", "virtual_thread": False, "cpp_runtime": "libhxcpp", "cpp_runtime_version": "6.0.0",
                       "poll_backend": case.get("poll_backend", "not-applicable"), "libuv_version": "1.51.0"}
             validate_health(health, case, 1, "owned", metadata)
             with self.assertRaises(RuntimeError):

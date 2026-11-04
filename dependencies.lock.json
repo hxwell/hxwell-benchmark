@@ -2,11 +2,11 @@
   "repositories": {
     "hxwell": {
       "url": "https://github.com/hxwell/hxwell.git",
-      "revision": "7944b82b589646baf67dba5f2a1954b9f040b30e"
+      "revision": "4a868cdedc3f466acf00903b1f6f61dbffc44b26"
     },
     "hxwell-crossbyte": {
       "url": "https://github.com/hxwell/hxwell-crossbyte.git",
-      "revision": "58d39ce73fda4ea13a07f4f2cae87a24b032ec0d",
+      "revision": "a010ebfaaf6f9aaa4d3133de56e0c80f127ad843",
       "vendored": true
     },
     "crossbyte": {
@@ -43,7 +43,8 @@
     "uuid": "2.4.1",
     "crypto": "1.3.0",
     "hxjava": "4.2.0",
-    "hxnodejs": "12.2.0"
+    "hxnodejs": "12.2.0",
+    "hx4compat": "1.0.0"
   },
   "maven": [
     {

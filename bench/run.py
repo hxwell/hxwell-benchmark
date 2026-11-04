@@ -139,6 +139,8 @@ def preflight(port, workload):
 
 def verify_bundle(bundle, case):
     metadata = json.loads((bundle / "build.json").read_text())
+    if metadata.get("haxe_version") != case.get("haxe_version", "4.3.7"):
+        raise ValueError("Build compiler provenance does not match the requested case")
     if metadata["case"] != case:
         raise ValueError("Build metadata does not match requested case")
     if metadata["build_os"] != platform.system() or metadata["build_arch"] != platform.machine():
@@ -161,6 +163,8 @@ def verify_bundle(bundle, case):
 def validate_health(health, case, workers, token, metadata):
     if health.get("run_id") != token or health.get("case_id") != case["id"]:
         raise RuntimeError("Port belongs to a different process/build; refusing to benchmark it")
+    if health.get("haxe_version") != case.get("haxe_version", "4.3.7"):
+        raise RuntimeError("Actual compiler version does not match the requested benchmark case")
     if health.get("target") != case["target"] or health.get("driver") != case["driver"] or health.get("workers") != workers:
         raise RuntimeError("Server identity/settings do not match the benchmark")
     expected_virtual = case["target"] == "jvm" and case["driver"] == "crossbyte"

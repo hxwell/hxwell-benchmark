@@ -8,7 +8,7 @@ import tarfile
 import tempfile
 import time
 
-from .config import ROOT, crossbyte_repository_name
+from .config import ROOT, crossbyte_repository_name, compiler_version
 from .dependencies import capture, command, local_haxelib, sha256, verify_repository
 
 
@@ -33,8 +33,9 @@ def build_libuv(deps, work, lock, log):
 
 def build(config, lock, case, deps, output, haxe="haxe"):
     deps, output = Path(deps).resolve(), Path(output).resolve()
-    if capture([haxe, "--version"]) != config["haxe_version"]:
-        raise ValueError(f"This locked suite requires Haxe {config['haxe_version']}")
+    expected_haxe = compiler_version(config, case)
+    if capture([haxe, "--version"]) != expected_haxe:
+        raise ValueError(f"This benchmark case requires Haxe {expected_haxe}")
     destination = output / case["id"]
     if destination.exists():
         raise ValueError(f"Refusing to overwrite {destination}; choose a fresh output directory")
@@ -49,6 +50,8 @@ def build(config, lock, case, deps, output, haxe="haxe"):
             "-D", f"bench_case={case['id']}", "-D", f"bench_driver={case['driver']}", "-D", f"bench_{case['driver']}"]
     if case.get("crossbyte_variant") == "jvm-virtual":
         args += ["-D", "crossbyte_jvm_virtual_threads"]
+    if expected_haxe.startswith("5."):
+        args += ["-lib", "hx4compat"]
     jars = []
     if case["driver"] == "undertow":
         for artifact in lock["maven"]:
@@ -100,7 +103,7 @@ def build(config, lock, case, deps, output, haxe="haxe"):
         with (work / "npm.log").open("w") as log:
             command(["npm", "ci", "--no-audit", "--no-fund"], cwd=destination, stdout=log, stderr=subprocess.STDOUT, timeout=180)
     files = {str(path.relative_to(destination)): sha256(path) for path in destination.rglob("*") if path.is_file()}
-    metadata = {"schema_version": 1, "case": case, "command": launch, "haxe_version": config["haxe_version"],
+    metadata = {"schema_version": 1, "case": case, "command": launch, "haxe_version": expected_haxe,
                 "build_seconds": time.monotonic() - started, "build_os": platform.system(), "build_arch": platform.machine(),
                 "repositories": lock["repositories"], "libraries": libraries, "native_libraries": native_libraries, "files": files,
                 "build_command": args, "workloads_sha256": sha256(ROOT / "benchmark.json"),
