@@ -178,6 +178,30 @@ is full, new connections wait in the kernel's listen queue instead of being
 accepted and immediately closed. Workload, concurrency and connection limits
 are unchanged.
 
+## Haxe 5 compiler comparison
+
+[Run #27](https://github.com/hxwell/hxwell-benchmark/actions/runs/41872715214) completed
+**81/81 stress trials** across all nine cases with the native strict-HTTP-200
+client. Every warmup and measurement had zero status, connection, read, write
+or timeout errors. `jvm-crossbyte` used Haxe **4.3.7** and `jvm-crossbyte5` used
+**5.0.0-preview.1** on the same Java 21 host, CPU affinity, heap and server limits.
+Both used adapter `8dca380`, HxWell `d2dba6f`, upstream Crossbyte `45628a5`,
+virtual application requests and platform I/O runtime threads. Compiler and
+actual thread types were checked before and after every trial.
+
+| Workload | Haxe 4 req/s | Haxe 5 req/s | Median change | Haxe 4 p99 | Haxe 5 p99 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Plaintext | 41,075 | 39,696 | -3.4% | 51.09 ms | 54.51 ms |
+| JSON | 40,481 | 40,509 | +0.1% | 46.61 ms | 43.74 ms |
+| Echo | 37,002 | 36,623 | -1.0% | 50.32 ms | 51.24 ms |
+
+These are medians of three repetitions at 1,000 connections. The sample ranges
+overlap for every workload. These measurements do not establish a consistent
+compiler speed advantage. Neither client was saturated. Haxe 5
+used about 2–5 MiB more peak RSS across these workloads.
+[Raw repetitions, settings and source provenance](docs/benchmarks/comparisons/haxe5-vs-haxe4-41872715214.json)
+are retained for this comparison.
+
 ## Historical driver-58 JVM comparison
 
 [Run #22](https://github.com/hxwell/hxwell-benchmark/actions/runs/41545569490)

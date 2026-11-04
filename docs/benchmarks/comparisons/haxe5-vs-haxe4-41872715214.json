@@ -1,0 +1,3344 @@
+{
+  "schema_version": 1,
+  "report_schema_version": 2,
+  "run": {
+    "repository": "hxwell/hxwell-benchmark",
+    "id": 41872715214,
+    "number": 27,
+    "attempt": 1,
+    "source_sha": "8e409938c557171b077b9286d31fba60d5f0902b",
+    "url": "https://github.com/hxwell/hxwell-benchmark/actions/runs/41872715214"
+  },
+  "profile": {
+    "warmup_seconds": 5,
+    "duration_seconds": 10,
+    "repetitions": 3,
+    "connections": [
+      1000
+    ],
+    "request_timeout_seconds": 10,
+    "performance_run": true
+  },
+  "settings": {
+    "expected_http_status": 200,
+    "server_workers": 2,
+    "client_threads": 2,
+    "protocol": "HTTP/1.1",
+    "middleware": "none",
+    "compression": "identity",
+    "request_timeout_seconds": 10,
+    "file_descriptor_limits": {
+      "soft_before": 65536,
+      "soft_after": 65536,
+      "hard": 65536,
+      "required": 2256
+    }
+  },
+  "hardware": {
+    "os": "Linux",
+    "release": "7.0.0-1017-azure",
+    "arch": "x86_64",
+    "logical_cpus": 4,
+    "cpu_model": "AMD EPYC 7763 64-Core Processor",
+    "memory": "MemTotal:       16367524 kB",
+    "cpuset.cpus.effective": "0-3"
+  },
+  "versions": {
+    "wrk": "wrk 4.2.0-hxwell-status-200 [epoll] Copyright (C) 2012 Will Glozer",
+    "java": "openjdk version \"21.0.13\" 2026-10-20 LTS",
+    "node": "v22.13.0",
+    "repositories": {
+      "hxwell": {
+        "url": "https://github.com/hxwell/hxwell.git",
+        "revision": "d2dba6f785af66c44171539651a494f9cb6bec25"
+      },
+      "hxwell-crossbyte": {
+        "url": "https://github.com/hxwell/hxwell-crossbyte.git",
+        "revision": "8dca380416689ae24400176b3909e20c09ef9e63",
+        "vendored": true
+      },
+      "crossbyte": {
+        "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+        "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+      },
+      "crossbyte-jvm-virtual": {
+        "url": "https://github.com/hxwell/crossbyte.git",
+        "revision": "3d234864b926958d09f43f1fad765604e086d0c4"
+      },
+      "emitter": {
+        "url": "https://github.com/Dimensionscape/Emitter.git",
+        "revision": "06b396f584271e24a7dc18dcfadfd020c567cc6a"
+      },
+      "wrk": {
+        "url": "https://github.com/wg/wrk.git",
+        "revision": "a211dd5a7050b1f9e8a9870b95513060e72ac4a0"
+      },
+      "libhxcpp": {
+        "url": "https://github.com/openfl/libhxcpp.git",
+        "revision": "04f436bc68c0f6f119ca1863c12974693ae8bcc7"
+      },
+      "crossbyte-libuv": {
+        "url": "https://github.com/DimensionscapeOrg/crossbyte-libuv.git",
+        "revision": "49344cefa751569a20a56e530a793fab958da2fa"
+      },
+      "libuv": {
+        "url": "https://github.com/libuv/libuv.git",
+        "revision": "5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b"
+      }
+    }
+  },
+  "load_generator": {
+    "upstream": {
+      "url": "https://github.com/wg/wrk.git",
+      "revision": "a211dd5a7050b1f9e8a9870b95513060e72ac4a0"
+    },
+    "policy": {
+      "version": "4.2.0-hxwell-status-200",
+      "expected_status": 200,
+      "patch": {
+        "path": "load/wrk-status-200.patch",
+        "sha256": "5cda1f28f8228912a7466f485870259019d36283377d9d99fb14aae77e19b21d"
+      }
+    },
+    "build_os": "Linux",
+    "build_arch": "x86_64",
+    "binary_sha256": "977be843691d67d3b2cb3d07ef82d38625a9f8cbaebf551209195f3f48eb9588",
+    "patched_sources": {
+      "src/wrk.c": "def2643a6f6e572f03a78dcb0d0acaed8e25003ed59dfe8909362a2bef8205a7",
+      "src/wrk.h": "80334640cd1acb8a3e66e4a1faca167fa4aaa90bc10c4510cc3865a52c65e8ad",
+      "src/script.c": "bca61e60883ce62a8d814f1decb0870d71d1ac35ef6b01d14a35ecfa0024074c"
+    }
+  },
+  "builds": {
+    "jvm-crossbyte": {
+      "schema_version": 1,
+      "case": {
+        "id": "jvm-crossbyte",
+        "target": "jvm",
+        "driver": "crossbyte",
+        "io_threads": "platform",
+        "dispatch": "virtual requests + platform I/O runtime"
+      },
+      "command": [
+        "java",
+        "-Xms256m",
+        "-Xmx256m",
+        "-cp",
+        "server.jar",
+        "hx.well.HxWell"
+      ],
+      "haxe_version": "4.3.7",
+      "build_seconds": 4.330902361999989,
+      "build_os": "Linux",
+      "build_arch": "x86_64",
+      "repositories": {
+        "hxwell": {
+          "url": "https://github.com/hxwell/hxwell.git",
+          "revision": "d2dba6f785af66c44171539651a494f9cb6bec25"
+        },
+        "hxwell-crossbyte": {
+          "url": "https://github.com/hxwell/hxwell-crossbyte.git",
+          "revision": "8dca380416689ae24400176b3909e20c09ef9e63",
+          "vendored": true
+        },
+        "crossbyte": {
+          "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+          "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+        },
+        "crossbyte-jvm-virtual": {
+          "url": "https://github.com/hxwell/crossbyte.git",
+          "revision": "3d234864b926958d09f43f1fad765604e086d0c4"
+        },
+        "emitter": {
+          "url": "https://github.com/Dimensionscape/Emitter.git",
+          "revision": "06b396f584271e24a7dc18dcfadfd020c567cc6a"
+        },
+        "wrk": {
+          "url": "https://github.com/wg/wrk.git",
+          "revision": "a211dd5a7050b1f9e8a9870b95513060e72ac4a0"
+        },
+        "libhxcpp": {
+          "url": "https://github.com/openfl/libhxcpp.git",
+          "revision": "04f436bc68c0f6f119ca1863c12974693ae8bcc7"
+        },
+        "crossbyte-libuv": {
+          "url": "https://github.com/DimensionscapeOrg/crossbyte-libuv.git",
+          "revision": "49344cefa751569a20a56e530a793fab958da2fa"
+        },
+        "libuv": {
+          "url": "https://github.com/libuv/libuv.git",
+          "revision": "5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b"
+        }
+      },
+      "libraries": {
+        "haxe-concurrent": "5.1.5",
+        "uuid": "2.4.1",
+        "crypto": "1.3.0",
+        "hxjava": "4.2.0",
+        "hxwell": "1.0.0",
+        "hxwell-crossbyte": "0.1.0",
+        "crossbyte": "1.0.1",
+        "emitter": "2.0.0"
+      },
+      "native_libraries": {},
+      "files": {
+        "server.jar": "49f7d01aefaf4f370c925b7e30e5f5b3492538b02e13173ed44578ad2816b91a"
+      },
+      "build_command": [
+        "haxe",
+        "-lib",
+        "hxwell-crossbyte",
+        "-cp",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/app/src",
+        "-D",
+        "disable_env",
+        "-D",
+        "disable_cli",
+        "-D",
+        "analyzer-optimize",
+        "-D",
+        "bench_case=jvm-crossbyte",
+        "-D",
+        "bench_driver=crossbyte",
+        "-D",
+        "bench_crossbyte",
+        "-lib",
+        "hxjava",
+        "--jvm",
+        "server.jar"
+      ],
+      "workloads_sha256": "96ddd03b108868fcb5062e09972690b68eed9adfde747b4f5efff25de3abc1f5",
+      "haxelib_source_checksums": {
+        "haxe-concurrent": {
+          "src/hx/concurrent/collection/SynchronizedMap.hx": "4c91f9d2329fbb847e08a401cb3bf72db167592abf7cc1032987609913131c94"
+        }
+      },
+      "crossbyte_repository": {
+        "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+        "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+      }
+    },
+    "jvm-crossbyte5": {
+      "schema_version": 1,
+      "case": {
+        "id": "jvm-crossbyte5",
+        "target": "jvm",
+        "driver": "crossbyte",
+        "haxe_version": "5.0.0-preview.1",
+        "io_threads": "platform",
+        "dispatch": "Haxe 5 preview 1 / virtual requests + platform I/O runtime"
+      },
+      "command": [
+        "java",
+        "-Xms256m",
+        "-Xmx256m",
+        "-cp",
+        "server.jar",
+        "hx.well.HxWell"
+      ],
+      "haxe_version": "5.0.0-preview.1",
+      "build_seconds": 4.282162373000006,
+      "build_os": "Linux",
+      "build_arch": "x86_64",
+      "repositories": {
+        "hxwell": {
+          "url": "https://github.com/hxwell/hxwell.git",
+          "revision": "d2dba6f785af66c44171539651a494f9cb6bec25"
+        },
+        "hxwell-crossbyte": {
+          "url": "https://github.com/hxwell/hxwell-crossbyte.git",
+          "revision": "8dca380416689ae24400176b3909e20c09ef9e63",
+          "vendored": true
+        },
+        "crossbyte": {
+          "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+          "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+        },
+        "crossbyte-jvm-virtual": {
+          "url": "https://github.com/hxwell/crossbyte.git",
+          "revision": "3d234864b926958d09f43f1fad765604e086d0c4"
+        },
+        "emitter": {
+          "url": "https://github.com/Dimensionscape/Emitter.git",
+          "revision": "06b396f584271e24a7dc18dcfadfd020c567cc6a"
+        },
+        "wrk": {
+          "url": "https://github.com/wg/wrk.git",
+          "revision": "a211dd5a7050b1f9e8a9870b95513060e72ac4a0"
+        },
+        "libhxcpp": {
+          "url": "https://github.com/openfl/libhxcpp.git",
+          "revision": "04f436bc68c0f6f119ca1863c12974693ae8bcc7"
+        },
+        "crossbyte-libuv": {
+          "url": "https://github.com/DimensionscapeOrg/crossbyte-libuv.git",
+          "revision": "49344cefa751569a20a56e530a793fab958da2fa"
+        },
+        "libuv": {
+          "url": "https://github.com/libuv/libuv.git",
+          "revision": "5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b"
+        }
+      },
+      "libraries": {
+        "haxe-concurrent": "5.1.5",
+        "uuid": "2.4.1",
+        "crypto": "1.3.0",
+        "hxjava": "4.2.0",
+        "hx4compat": "1.0.0",
+        "hxwell": "1.0.0",
+        "hxwell-crossbyte": "0.1.0",
+        "crossbyte": "1.0.1",
+        "emitter": "2.0.0"
+      },
+      "native_libraries": {},
+      "files": {
+        "server.jar": "b9a99b9ae2323e0855c3a3e5f4cf42fbb361686ceb8f9c175dc8a2c563811d86"
+      },
+      "build_command": [
+        "haxe",
+        "-lib",
+        "hxwell-crossbyte",
+        "-cp",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/app/src",
+        "-D",
+        "disable_env",
+        "-D",
+        "disable_cli",
+        "-D",
+        "analyzer-optimize",
+        "-D",
+        "bench_case=jvm-crossbyte5",
+        "-D",
+        "bench_driver=crossbyte",
+        "-D",
+        "bench_crossbyte",
+        "-lib",
+        "hx4compat",
+        "-lib",
+        "hxjava",
+        "--jvm",
+        "server.jar"
+      ],
+      "workloads_sha256": "96ddd03b108868fcb5062e09972690b68eed9adfde747b4f5efff25de3abc1f5",
+      "haxelib_source_checksums": {
+        "haxe-concurrent": {
+          "src/hx/concurrent/collection/SynchronizedMap.hx": "4c91f9d2329fbb847e08a401cb3bf72db167592abf7cc1032987609913131c94"
+        }
+      },
+      "crossbyte_repository": {
+        "url": "https://github.com/DimensionscapeOrg/crossbyte.git",
+        "revision": "45628a59667de98649c23cbcd391513a1ef714c4"
+      }
+    }
+  },
+  "comparison": [
+    {
+      "workload": "plaintext",
+      "haxe4": {
+        "rps": 41074.86097001264,
+        "rps_min": 40505.881541102775,
+        "rps_max": 43629.397380937466,
+        "samples": [
+          41074.86097001264,
+          40505.881541102775,
+          43629.397380937466
+        ],
+        "p99_ms": 51.087,
+        "peak_rss_mib": 253.9609375,
+        "client_saturated": false
+      },
+      "haxe5": {
+        "rps": 39696.30871865833,
+        "rps_min": 34985.02294256251,
+        "rps_max": 43706.96276618105,
+        "samples": [
+          39696.30871865833,
+          34985.02294256251,
+          43706.96276618105
+        ],
+        "p99_ms": 54.506,
+        "peak_rss_mib": 259.0703125,
+        "client_saturated": false
+      },
+      "change_percent": -3.3561945647503144
+    },
+    {
+      "workload": "json",
+      "haxe4": {
+        "rps": 40480.74141602534,
+        "rps_min": 37192.11918126831,
+        "rps_max": 42319.91865807748,
+        "samples": [
+          40480.74141602534,
+          42319.91865807748,
+          37192.11918126831
+        ],
+        "p99_ms": 46.613,
+        "peak_rss_mib": 258.97265625,
+        "client_saturated": false
+      },
+      "haxe5": {
+        "rps": 40508.898435834875,
+        "rps_min": 38604.43045530151,
+        "rps_max": 41748.17175896398,
+        "samples": [
+          41748.17175896398,
+          40508.898435834875,
+          38604.43045530151
+        ],
+        "p99_ms": 43.737,
+        "peak_rss_mib": 261.2734375,
+        "client_saturated": false
+      },
+      "change_percent": 0.06955658128926512
+    },
+    {
+      "workload": "echo",
+      "haxe4": {
+        "rps": 37002.112082488304,
+        "rps_min": 35869.83846356243,
+        "rps_max": 37770.15344957545,
+        "samples": [
+          37770.15344957545,
+          37002.112082488304,
+          35869.83846356243
+        ],
+        "p99_ms": 50.316,
+        "peak_rss_mib": 265.80859375,
+        "client_saturated": false
+      },
+      "haxe5": {
+        "rps": 36622.6733386274,
+        "rps_min": 36255.104909447946,
+        "rps_max": 37442.31236095666,
+        "samples": [
+          36255.104909447946,
+          36622.6733386274,
+          37442.31236095666
+        ],
+        "p99_ms": 51.241,
+        "peak_rss_mib": 268.8984375,
+        "client_saturated": false
+      },
+      "change_percent": -1.0254515823719168
+    }
+  ],
+  "trials": [
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5054383.0,
+          "requests": 73455.0,
+          "bytes": 14103360.0,
+          "latency_us": {
+            "p50": 62179.0,
+            "p95": 477751.0,
+            "p99": 961709.0,
+            "mean": 105797.806934,
+            "max": 1249253.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.46,
+          "cpu_cores_used": 2.0694909744671115,
+          "peak_group_rss_bytes": 253812736,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.350676999999962,
+          "cpu_cores_used": 0.26722885859658085,
+          "peak_group_rss_bytes": 10833920,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.2673914540000055,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:40375/plaintext"
+        ],
+        "rps": 14532.931121365358,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10057003.0,
+        "requests": 413090.0,
+        "bytes": 79313280.0,
+        "latency_us": {
+          "p50": 22517.0,
+          "p95": 40026.0,
+          "p99": 51087.0,
+          "mean": 24240.878515,
+          "max": 189362.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.97,
+        "cpu_cores_used": 1.7868146206180906,
+        "peak_group_rss_bytes": 265682944,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.862186000000065,
+        "cpu_cores_used": 0.5828959183963717,
+        "peak_group_rss_bytes": 10047488,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.319977076000015,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:40375/plaintext"
+      ],
+      "rps": 41074.86097001264,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5062217.0,
+          "requests": 172349.0,
+          "bytes": 38433827.0,
+          "latency_us": {
+            "p50": 27034.0,
+            "p95": 53464.0,
+            "p99": 76918.0,
+            "mean": 29257.132743,
+            "max": 98565.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.37,
+          "cpu_cores_used": 1.8509676689087011,
+          "peak_group_rss_bytes": 265220096,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.6961069999999836,
+          "cpu_cores_used": 0.5325941183477483,
+          "peak_group_rss_bytes": 10194944,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.271541283000005,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:40375/json"
+        ],
+        "rps": 34046.1501354051,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10042405.0,
+        "requests": 406524.0,
+        "bytes": 90654852.0,
+        "latency_us": {
+          "p50": 23217.0,
+          "p95": 39018.0,
+          "p99": 46613.0,
+          "mean": 24566.547292,
+          "max": 139271.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.23,
+        "cpu_cores_used": 1.7157244703833394,
+        "peak_group_rss_bytes": 268890112,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.901100000000042,
+        "cpu_cores_used": 0.5876182050016945,
+        "peak_group_rss_bytes": 10031104,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.089064226999994,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:40375/json"
+      ],
+      "rps": 40480.74141602534,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5056508.0,
+          "requests": 162154.0,
+          "bytes": 35511726.0,
+          "latency_us": {
+            "p50": 27232.0,
+            "p95": 60027.0,
+            "p99": 82578.0,
+            "mean": 31137.792433,
+            "max": 115158.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.38,
+          "cpu_cores_used": 1.8550351349191974,
+          "peak_group_rss_bytes": 275050496,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.5123069999999643,
+          "cpu_cores_used": 0.49684624250569054,
+          "peak_group_rss_bytes": 10113024,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.196874484000006,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:40375/echo"
+        ],
+        "rps": 32068.376041331292,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10057571.0,
+        "requests": 379876.0,
+        "bytes": 83192844.0,
+        "latency_us": {
+          "p50": 24253.0,
+          "p95": 42612.0,
+          "p99": 48454.0,
+          "mean": 26231.063806,
+          "max": 81885.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.68,
+        "cpu_cores_used": 1.7578797107174289,
+        "peak_group_rss_bytes": 278720512,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.434962999999982,
+        "cpu_cores_used": 0.5403852480882295,
+        "peak_group_rss_bytes": 9867264,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.245656071000013,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:40375/echo"
+      ],
+      "rps": 37770.15344957545,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "6352a8e492f44a04bba3d29d9f77112f",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5051925.0,
+          "requests": 69907.0,
+          "bytes": 13422144.0,
+          "latency_us": {
+            "p50": 64787.0,
+            "p95": 442642.0,
+            "p99": 931046.0,
+            "mean": 106012.3699,
+            "max": 1268754.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.39,
+          "cpu_cores_used": 2.0566417751649126,
+          "peak_group_rss_bytes": 258007040,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.4194360000000188,
+          "cpu_cores_used": 0.2809693334718981,
+          "peak_group_rss_bytes": 10641408,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.238787500000001,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:32915/plaintext"
+        ],
+        "rps": 13837.695531901207,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10055343.0,
+        "requests": 399160.0,
+        "bytes": 76638720.0,
+        "latency_us": {
+          "p50": 23411.0,
+          "p95": 43074.0,
+          "p99": 54506.0,
+          "mean": 25162.985741,
+          "max": 162346.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.96,
+        "cpu_cores_used": 1.7861151031844462,
+        "peak_group_rss_bytes": 268308480,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.762208999999984,
+        "cpu_cores_used": 0.5730494723054185,
+        "peak_group_rss_bytes": 10272768,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.260005135000029,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:32915/plaintext"
+      ],
+      "rps": 39696.30871865833,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5054368.0,
+          "requests": 188705.0,
+          "bytes": 42081215.0,
+          "latency_us": {
+            "p50": 24775.0,
+            "p95": 46018.0,
+            "p99": 65593.0,
+            "mean": 26737.222417,
+            "max": 205483.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.19,
+          "cpu_cores_used": 1.8182293018632596,
+          "peak_group_rss_bytes": 270163968,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.867678999999953,
+          "cpu_cores_used": 0.5673664838017242,
+          "peak_group_rss_bytes": 10141696,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.239845709999997,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:32915/json"
+        ],
+        "rps": 37335.033776725395,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10058165.0,
+        "requests": 419910.0,
+        "bytes": 93639930.0,
+        "latency_us": {
+          "p50": 22563.0,
+          "p95": 38161.0,
+          "p99": 43737.0,
+          "mean": 23710.795279,
+          "max": 70721.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.48,
+        "cpu_cores_used": 1.7378915537774533,
+        "peak_group_rss_bytes": 273965056,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 6.1039320000001,
+        "cpu_cores_used": 0.606863379155154,
+        "peak_group_rss_bytes": 9863168,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.167475636999995,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:32915/json"
+      ],
+      "rps": 41748.17175896398,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 1,
+      "valid": true,
+      "health": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5057602.0,
+          "requests": 162563.0,
+          "bytes": 35601297.0,
+          "latency_us": {
+            "p50": 27527.0,
+            "p95": 59719.0,
+            "p99": 78371.0,
+            "mean": 30976.207516,
+            "max": 130663.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.15,
+          "cpu_cores_used": 1.8091577787259654,
+          "peak_group_rss_bytes": 278421504,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.620804999999905,
+          "cpu_cores_used": 0.518191229756692,
+          "peak_group_rss_bytes": 10170368,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.1363848690000395,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:32915/echo"
+        ],
+        "rps": 32142.3077577081,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10063107.0,
+        "requests": 364839.0,
+        "bytes": 79899741.0,
+        "latency_us": {
+          "p50": 25062.0,
+          "p95": 45732.0,
+          "p99": 51832.0,
+          "mean": 27284.661374,
+          "max": 91976.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.4,
+        "cpu_cores_used": 1.7290882428259977,
+        "peak_group_rss_bytes": 281960448,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.312355000000025,
+        "cpu_cores_used": 0.5279040558745947,
+        "peak_group_rss_bytes": 9879552,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.106206780000036,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:32915/echo"
+      ],
+      "rps": 36255.104909447946,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "64887f51307941a5b82852c690a62072",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5051823.0,
+          "requests": 69455.0,
+          "bytes": 13335360.0,
+          "latency_us": {
+            "p50": 64171.0,
+            "p95": 316064.0,
+            "p99": 708457.0,
+            "mean": 94306.756159,
+            "max": 929101.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.56,
+          "cpu_cores_used": 2.090334518845969,
+          "peak_group_rss_bytes": 256544768,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.4162379999997938,
+          "cpu_cores_used": 0.2803419676421351,
+          "peak_group_rss_bytes": 10903552,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.313825491999978,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:58135/plaintext"
+        ],
+        "rps": 13748.502273337765,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10057058.0,
+        "requests": 407370.0,
+        "bytes": 78215040.0,
+        "latency_us": {
+          "p50": 22600.0,
+          "p95": 44671.0,
+          "p99": 55470.0,
+          "mean": 24665.831953,
+          "max": 135051.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.86,
+        "cpu_cores_used": 1.7758672566072504,
+        "peak_group_rss_bytes": 265932800,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.899744000000055,
+        "cpu_cores_used": 0.5866272223944672,
+        "peak_group_rss_bytes": 10010624,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.159315594000077,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:58135/plaintext"
+      ],
+      "rps": 40505.881541102775,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5056302.0,
+          "requests": 185207.0,
+          "bytes": 41301161.0,
+          "latency_us": {
+            "p50": 24611.0,
+            "p95": 48689.0,
+            "p99": 72929.0,
+            "mean": 27330.92817,
+            "max": 168478.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.28,
+          "cpu_cores_used": 1.8353334116514401,
+          "peak_group_rss_bytes": 263753728,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.778011000000106,
+          "cpu_cores_used": 0.5494155610167483,
+          "peak_group_rss_bytes": 10170368,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.266357945000095,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:58135/json"
+        ],
+        "rps": 36628.94344522934,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10036645.0,
+        "requests": 424750.0,
+        "bytes": 94719250.0,
+        "latency_us": {
+          "p50": 22393.0,
+          "p95": 37026.0,
+          "p99": 41408.0,
+          "mean": 23521.558925,
+          "max": 146200.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.77,
+        "cpu_cores_used": 1.7705119589265137,
+        "peak_group_rss_bytes": 267161600,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 6.0764449999999215,
+        "cpu_cores_used": 0.6054259167281418,
+        "peak_group_rss_bytes": 9863168,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.174747539999998,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:58135/json"
+      ],
+      "rps": 42319.91865807748,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5057866.0,
+          "requests": 158037.0,
+          "bytes": 34610103.0,
+          "latency_us": {
+            "p50": 28384.0,
+            "p95": 60154.0,
+            "p99": 83935.0,
+            "mean": 31895.097631,
+            "max": 124559.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.44,
+          "cpu_cores_used": 1.866399782042466,
+          "peak_group_rss_bytes": 274370560,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.423056000000088,
+          "cpu_cores_used": 0.4790668633767854,
+          "peak_group_rss_bytes": 10285056,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.144298768999988,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:58135/echo"
+        ],
+        "rps": 31245.78626638191,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10069209.0,
+        "requests": 372582.0,
+        "bytes": 81595458.0,
+        "latency_us": {
+          "p50": 24814.0,
+          "p95": 44191.0,
+          "p99": 50316.0,
+          "mean": 26739.0099,
+          "max": 80860.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.81,
+        "cpu_cores_used": 1.7687585986148462,
+        "peak_group_rss_bytes": 277909504,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.3661500000000615,
+        "cpu_cores_used": 0.5329266678246585,
+        "peak_group_rss_bytes": 9879552,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.186832601999981,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:58135/echo"
+      ],
+      "rps": 37002.112082488304,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "d4aa894674984884a58932e3087034d6",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5053764.0,
+          "requests": 61395.0,
+          "bytes": 11787840.0,
+          "latency_us": {
+            "p50": 72884.0,
+            "p95": 408582.0,
+            "p99": 795035.0,
+            "mean": 109516.954587,
+            "max": 1045783.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.52,
+          "cpu_cores_used": 2.081616790970057,
+          "peak_group_rss_bytes": 253009920,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.3352379999998902,
+          "cpu_cores_used": 0.2642066388537119,
+          "peak_group_rss_bytes": 10731520,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.306028652000009,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:53967/plaintext"
+        ],
+        "rps": 12148.370996350443,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10063392.0,
+        "requests": 352068.0,
+        "bytes": 67597056.0,
+        "latency_us": {
+          "p50": 25803.0,
+          "p95": 53580.0,
+          "p99": 60789.0,
+          "mean": 28540.727144,
+          "max": 161624.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.54,
+        "cpu_cores_used": 1.7429510844852312,
+        "peak_group_rss_bytes": 262397952,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.434125999999878,
+        "cpu_cores_used": 0.5399894985706487,
+        "peak_group_rss_bytes": 10129408,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.220997119999993,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:53967/plaintext"
+      ],
+      "rps": 34985.02294256251,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5058088.0,
+          "requests": 168808.0,
+          "bytes": 37644184.0,
+          "latency_us": {
+            "p50": 27321.0,
+            "p95": 56363.0,
+            "p99": 72850.0,
+            "mean": 29914.550331,
+            "max": 128570.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.22,
+          "cpu_cores_used": 1.8228231695454886,
+          "peak_group_rss_bytes": 267116544,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.646114000000125,
+          "cpu_cores_used": 0.5231451093773231,
+          "peak_group_rss_bytes": 10125312,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.200422954000032,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:53967/json"
+        ],
+        "rps": 33373.875662107894,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10059296.0,
+        "requests": 407491.0,
+        "bytes": 90870493.0,
+        "latency_us": {
+          "p50": 23299.0,
+          "p95": 38445.0,
+          "p99": 43409.0,
+          "mean": 24459.606595,
+          "max": 62535.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.48,
+        "cpu_cores_used": 1.737696156868234,
+        "peak_group_rss_bytes": 270786560,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.977827000000161,
+        "cpu_cores_used": 0.5942589819407006,
+        "peak_group_rss_bytes": 9744384,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.179222976000005,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:53967/json"
+      ],
+      "rps": 40508.898435834875,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 2,
+      "valid": true,
+      "health": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5056298.0,
+          "requests": 140876.0,
+          "bytes": 30851844.0,
+          "latency_us": {
+            "p50": 30258.0,
+            "p95": 68400.0,
+            "p99": 102342.0,
+            "mean": 36049.341941,
+            "max": 204615.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.27,
+          "cpu_cores_used": 1.833357132036126,
+          "peak_group_rss_bytes": 275767296,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.358722999999827,
+          "cpu_cores_used": 0.46649208571168616,
+          "peak_group_rss_bytes": 10379264,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.132160524000028,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:53967/echo"
+        ],
+        "rps": 27861.49075865386,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10057813.0,
+        "requests": 368344.0,
+        "bytes": 80667336.0,
+        "latency_us": {
+          "p50": 24857.0,
+          "p95": 44831.0,
+          "p99": 51241.0,
+          "mean": 27050.488944,
+          "max": 72664.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.53,
+        "cpu_cores_used": 1.7429236355855893,
+        "peak_group_rss_bytes": 280616960,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.437468999999965,
+        "cpu_cores_used": 0.5406214054685611,
+        "peak_group_rss_bytes": 9920512,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.115437912999937,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:53967/echo"
+      ],
+      "rps": 36622.6733386274,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "660d452cf0af4839891dcff3247c62ba",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5054012.0,
+          "requests": 68577.0,
+          "bytes": 15292671.0,
+          "latency_us": {
+            "p50": 68769.0,
+            "p95": 506880.0,
+            "p99": 1002328.0,
+            "mean": 113824.878341,
+            "max": 1336593.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.51,
+          "cpu_cores_used": 2.0795360200965094,
+          "peak_group_rss_bytes": 255574016,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.3221380000002227,
+          "cpu_cores_used": 0.2616016740760059,
+          "peak_group_rss_bytes": 10956800,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.284708396999918,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:55685/json"
+        ],
+        "rps": 13568.824134173008,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10052240.0,
+        "requests": 388061.0,
+        "bytes": 86537603.0,
+        "latency_us": {
+          "p50": 24074.0,
+          "p95": 43008.0,
+          "p99": 62603.0,
+          "mean": 25947.061987,
+          "max": 122884.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 18.21,
+        "cpu_cores_used": 1.8115365331508204,
+        "peak_group_rss_bytes": 269795328,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.501791999999796,
+        "cpu_cores_used": 0.5473200003183167,
+        "peak_group_rss_bytes": 10141696,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.1734345079999,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:55685/json"
+      ],
+      "rps": 38604.43045530151,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5057297.0,
+          "requests": 205470.0,
+          "bytes": 39450240.0,
+          "latency_us": {
+            "p50": 22719.0,
+            "p95": 40771.0,
+            "p99": 53058.0,
+            "mean": 24357.120943,
+            "max": 103266.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 8.99,
+          "cpu_cores_used": 1.7776294332723588,
+          "peak_group_rss_bytes": 268115968,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.9103620000000774,
+          "cpu_cores_used": 0.5754777700419962,
+          "peak_group_rss_bytes": 9986048,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.199665037999921,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:55685/plaintext"
+        ],
+        "rps": 40628.42265344511,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10062653.0,
+        "requests": 439808.0,
+        "bytes": 84443136.0,
+        "latency_us": {
+          "p50": 21058.0,
+          "p95": 36791.0,
+          "p99": 41622.0,
+          "mean": 22633.948466,
+          "max": 56509.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.31,
+        "cpu_cores_used": 1.720222291278453,
+        "peak_group_rss_bytes": 271654912,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 6.181626000000051,
+        "cpu_cores_used": 0.6143137401240062,
+        "peak_group_rss_bytes": 9728000,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.305957190999948,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:55685/plaintext"
+      ],
+      "rps": 43706.96276618105,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte5",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5060273.0,
+          "requests": 154984.0,
+          "bytes": 33941496.0,
+          "latency_us": {
+            "p50": 28278.0,
+            "p95": 62377.0,
+            "p99": 84698.0,
+            "mean": 32528.026259,
+            "max": 117828.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.4,
+          "cpu_cores_used": 1.85760728719577,
+          "peak_group_rss_bytes": 276635648,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.414444000000003,
+          "cpu_cores_used": 0.4771371030772457,
+          "peak_group_rss_bytes": 10272768,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.13142429800007,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:55685/echo"
+        ],
+        "rps": 30627.596574335024,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10058914.0,
+        "requests": 376629.0,
+        "bytes": 82481751.0,
+        "latency_us": {
+          "p50": 24223.0,
+          "p95": 43532.0,
+          "p99": 49846.0,
+          "mean": 26619.120154,
+          "max": 207391.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.82,
+        "cpu_cores_used": 1.7715630136613159,
+        "peak_group_rss_bytes": 280305664,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.390938000000006,
+        "cpu_cores_used": 0.5359363843850345,
+        "peak_group_rss_bytes": 9854976,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.186215362999974,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:55685/echo"
+      ],
+      "rps": 37442.31236095666,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "780d335eeac14647941400b0472ba77e",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte5",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "5.0.0-preview.1",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "json",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 39,
+        "sha256": "e0d8a95dec6682936dd1eca8aa22b1cd181410ee2108706d5fabbfeff94a1f11",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5054535.0,
+          "requests": 70486.0,
+          "bytes": 15718378.0,
+          "latency_us": {
+            "p50": 64846.0,
+            "p95": 521648.0,
+            "p99": 1025922.0,
+            "mean": 112835.673182,
+            "max": 1352378.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 10.46,
+          "cpu_cores_used": 2.0694287407249137,
+          "peak_group_rss_bytes": 255766528,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 1.2322580000004564,
+          "cpu_cores_used": 0.24379255460699284,
+          "peak_group_rss_bytes": 10915840,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.250579067999979,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:39733/json"
+        ],
+        "rps": 13945.100785730043,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10062051.0,
+        "requests": 374229.0,
+        "bytes": 83453067.0,
+        "latency_us": {
+          "p50": 24948.0,
+          "p95": 49611.0,
+          "p99": 89130.0,
+          "mean": 27973.950445,
+          "max": 362878.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 18.21,
+        "cpu_cores_used": 1.8097701949632337,
+        "peak_group_rss_bytes": 271552512,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.475924999999734,
+        "cpu_cores_used": 0.5442155878557695,
+        "peak_group_rss_bytes": 10403840,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.249201152000069,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:39733/json"
+      ],
+      "rps": 37192.11918126831,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "plaintext",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 14,
+        "sha256": "c98c24b677eff44860afea6f493bbaec5bb1c4cbb209c6fc2bbb47f66ff2ad31",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5057074.0,
+          "requests": 204917.0,
+          "bytes": 39344064.0,
+          "latency_us": {
+            "p50": 22677.0,
+            "p95": 39496.0,
+            "p99": 52169.0,
+            "mean": 24381.210982,
+            "max": 95155.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.14,
+          "cpu_cores_used": 1.807369241581199,
+          "peak_group_rss_bytes": 262889472,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 3.0180890000001455,
+          "cpu_cores_used": 0.5968053858812715,
+          "peak_group_rss_bytes": 9879552,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.182111334999945,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:39733/plaintext"
+        ],
+        "rps": 40520.86245920072,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10056270.0,
+        "requests": 438749.0,
+        "bytes": 84239808.0,
+        "latency_us": {
+          "p50": 21605.0,
+          "p95": 36380.0,
+          "p99": 41157.0,
+          "mean": 22691.663786,
+          "max": 55782.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.54,
+        "cpu_cores_used": 1.7441854683694848,
+        "peak_group_rss_bytes": 266297344,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 6.175982000000204,
+        "cpu_cores_used": 0.6141424205993081,
+        "peak_group_rss_bytes": 9748480,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.174353493999888,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:39733/plaintext"
+      ],
+      "rps": 43629.397380937466,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    },
+    {
+      "case_id": "jvm-crossbyte",
+      "workload": "echo",
+      "connections": 1000,
+      "repetition": 3,
+      "valid": true,
+      "health": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      },
+      "preflight": {
+        "bytes": 35,
+        "sha256": "9bda06f5248662896dcee03e60bfbd36f99f2db27f05724bfc88b8cf4647e3ec",
+        "keep_alive_verified": true
+      },
+      "warmup": {
+        "wrk": {
+          "expected_status": 200.0,
+          "duration_us": 5056471.0,
+          "requests": 148190.0,
+          "bytes": 32453610.0,
+          "latency_us": {
+            "p50": 28420.0,
+            "p95": 67522.0,
+            "p99": 84407.0,
+            "mean": 34089.767876,
+            "max": 168468.0
+          },
+          "errors": {
+            "connect": 0.0,
+            "read": 0.0,
+            "write": 0.0,
+            "status": 0.0,
+            "timeout": 0.0
+          }
+        },
+        "server": {
+          "available": true,
+          "cpu_seconds": 9.39,
+          "cpu_cores_used": 1.8570263727409888,
+          "peak_group_rss_bytes": 273506304,
+          "peak_threads": 23,
+          "processes_seen": 1,
+          "process_tree_changed": false
+        },
+        "client": {
+          "available": true,
+          "cpu_seconds": 2.3569759999995767,
+          "cpu_cores_used": 0.46613062746717554,
+          "peak_group_rss_bytes": 10264576,
+          "peak_threads": 3,
+          "processes_seen": 1,
+          "process_tree_changed": false,
+          "cpu_accounting": "waited-child resource usage"
+        },
+        "wall_seconds": 5.16741326600004,
+        "command": [
+          "taskset",
+          "-c",
+          "2,3",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+          "-t",
+          "2",
+          "-c",
+          "1000",
+          "-d",
+          "5s",
+          "--timeout",
+          "10s",
+          "--latency",
+          "-s",
+          "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+          "http://127.0.0.1:39733/echo"
+        ],
+        "rps": 29307.0008707654,
+        "client_saturated": false
+      },
+      "wrk": {
+        "expected_status": 200.0,
+        "duration_us": 10060207.0,
+        "requests": 360858.0,
+        "bytes": 79027902.0,
+        "latency_us": {
+          "p50": 25541.0,
+          "p95": 45533.0,
+          "p99": 53011.0,
+          "mean": 27612.098277,
+          "max": 75157.0
+        },
+        "errors": {
+          "connect": 0.0,
+          "read": 0.0,
+          "write": 0.0,
+          "status": 0.0,
+          "timeout": 0.0
+        }
+      },
+      "server": {
+        "available": true,
+        "cpu_seconds": 17.64,
+        "cpu_cores_used": 1.7534430454562218,
+        "peak_group_rss_bytes": 277307392,
+        "peak_threads": 23,
+        "processes_seen": 1,
+        "process_tree_changed": false
+      },
+      "client": {
+        "available": true,
+        "cpu_seconds": 5.2802370000003975,
+        "cpu_cores_used": 0.5248636534020024,
+        "peak_group_rss_bytes": 9859072,
+        "peak_threads": 3,
+        "processes_seen": 1,
+        "process_tree_changed": false,
+        "cpu_accounting": "waited-child resource usage"
+      },
+      "wall_seconds": 10.331059213999879,
+      "command": [
+        "taskset",
+        "-c",
+        "2,3",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/out/wrk/wrk",
+        "-t",
+        "2",
+        "-c",
+        "1000",
+        "-d",
+        "10s",
+        "--timeout",
+        "10s",
+        "--latency",
+        "-s",
+        "/home/runner/work/hxwell-benchmark/hxwell-benchmark/load/report.lua",
+        "http://127.0.0.1:39733/echo"
+      ],
+      "rps": 35869.83846356243,
+      "client_saturated": false,
+      "health_after": {
+        "run_id": "ad806664e5614364afee1bdad624c4ae",
+        "driver": "crossbyte",
+        "case_id": "jvm-crossbyte",
+        "cpp_runtime": "",
+        "cpp_runtime_version": "",
+        "haxe_version": "4.3.7",
+        "io_virtual_thread": false,
+        "virtual_thread": true,
+        "workers": 2,
+        "poll_backend": "not-applicable",
+        "libuv_version": "",
+        "target": "jvm"
+      }
+    }
+  ]
+}
