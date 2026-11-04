@@ -70,5 +70,13 @@
       "path": "org/jboss/threads/jboss-threads/3.5.0.Final/jboss-threads-3.5.0.Final.jar",
       "sha256": "e150b67a7f528525fe68dd60841520c22d59e0a831ea237c45a704de48b990b1"
     }
-  ]
+  ],
+  "load_generator": {
+    "version": "4.2.0-hxwell-status-200",
+    "expected_status": 200,
+    "patch": {
+      "path": "load/wrk-status-200.patch",
+      "sha256": "5cda1f28f8228912a7466f485870259019d36283377d9d99fb14aae77e19b21d"
+    }
+  }
 }

@@ -10,6 +10,7 @@ if scenario == "echo" then
 end
 
 function done(summary, latency, requests)
+    assert(summary.expected_status == 200, "This benchmark requires the native strict HTTP 200 wrk build")
     local function number(value)
         if value ~= value or value == math.huge or value == -math.huge then return "null" end
         return string.format("%.6f", value)
@@ -18,7 +19,8 @@ function done(summary, latency, requests)
         if summary.requests == 0 then return "null" end
         return number(latency:percentile(p))
     end
-    local result = '{"duration_us":' .. number(summary.duration)
+    local result = '{"expected_status":' .. number(summary.expected_status)
+        .. ',"duration_us":' .. number(summary.duration)
         .. ',"requests":' .. number(summary.requests)
         .. ',"bytes":' .. number(summary.bytes)
         .. ',"latency_us":{"p50":' .. percentile(50)

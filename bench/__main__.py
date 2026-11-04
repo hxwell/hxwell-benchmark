@@ -9,6 +9,7 @@ from .dependencies import fetch
 from .build import build, unpack
 from .run import run
 from .vendor import snapshot
+from .loadgen import build_wrk
 
 
 def main():
@@ -26,6 +27,11 @@ def main():
     compile.add_argument("--deps", type=Path, default=Path("dependencies"))
     compile.add_argument("--out", type=Path, default=Path("out/build"))
     compile.add_argument("--haxe", default="haxe")
+    loadgen = sub.add_parser("build-wrk")
+    loadgen.add_argument("--deps", type=Path, default=Path("dependencies"))
+    loadgen.add_argument("--out", type=Path, default=Path("out/wrk"))
+    loadgen.add_argument("--openssl", default="/usr")
+    loadgen.add_argument("--make", default="make")
     vendor = sub.add_parser("vendor-crossbyte")
     vendor.add_argument("--source", type=Path, required=True)
     extract = sub.add_parser("unpack")
@@ -36,7 +42,7 @@ def main():
     benchmark.add_argument("--bundles", type=Path, default=Path("out/build"))
     benchmark.add_argument("--out", type=Path, required=True)
     benchmark.add_argument("--profile", choices=list(config["profiles"]), default="ci")
-    benchmark.add_argument("--wrk", default="wrk")
+    benchmark.add_argument("--wrk", default="out/wrk/wrk")
     benchmark.add_argument("--seed", type=int, default=1337)
     benchmark.add_argument("--workers", type=int)
     benchmark.add_argument("--no-affinity", action="store_true")
@@ -57,6 +63,8 @@ def main():
         if len(cases) != 1:
             parser.error("build expects one case")
         build(config, lock, cases[0], args.deps, args.out, args.haxe)
+    elif args.command == "build-wrk":
+        print(json.dumps(build_wrk(lock, args.deps, args.out, args.openssl, args.make), indent=2))
     elif args.command == "unpack":
         unpack(args.archives, args.out)
     elif args.command == "vendor-crossbyte":

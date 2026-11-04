@@ -140,9 +140,19 @@ means the same implementation.
 
 `wrk` performs native request generation. Its Lua script sets a fixed method/body
 and writes the final statistics; it has **no per-request or response callback**.
-Response correctness is checked outside the measured interval. `wrk` reports
-HTTP status errors for responses above 399; redirects are rejected by the
-preflights but are not individually inspected during load. See the upstream
+Response bodies, content types and persistent connections are checked before
+and after the measured interval. During load, `wrk` reports
+HTTP status errors for **every response whose status is not exactly 200**,
+including other 2xx responses and redirects. The pinned client applies
+`load/wrk-status-200.patch` to the existing native C counter, with no Lua
+per-response callback. The native summary must attest `expected_status: 200`;
+missing evidence, any non-200 response in warmup or measurement, or a mismatched
+client build invalidates the trial and prevents a performance score. Both the
+client binary and patch hashes are verified and retained in `results.json`.
+Reports use schema version 2. Run #23 and earlier used the previous `>399`
+status counter; their historical charts do not prove that every load response
+was 200. Those legacy reports cannot receive scores from the new publisher.
+See the upstream
 [wrk scripting API](https://github.com/wg/wrk/blob/4.2.0/SCRIPTING).
 
 The Crossbyte runtime is pinned to upstream `45628a5`; the virtual-I/O fork
@@ -331,25 +341,26 @@ haxelib install hxjava 4.2.0
 haxelib install hxnodejs 12.2.0
 
 python3 -m pip install -r requirements-charts.txt
-python3 -m unittest discover -s tests -v
 python3 -m bench fetch
-make -C dependencies/wrk -j2 WITH_OPENSSL=/usr VER=4.2.0
+python3 -m bench build-wrk --openssl /usr
+HXWELL_TEST_WRK="$PWD/out/wrk/wrk" python3 -m unittest discover -s tests -v
 
 python3 -m bench build --case jvm-socket --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case jvm-crossbyte --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench run --cases jvm-socket,jvm-crossbyte \
-  --profile smoke --wrk "$PWD/dependencies/wrk/wrk" --out out/local-smoke
+  --profile smoke --wrk "$PWD/out/wrk/wrk" --out out/local-smoke
 
 # Native C++ comparison, including the Crossbyte driver:
 python3 -m bench build --case cpp-socket --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case cpp-crossbyte --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench build --case cpp-crossbyte-libuv --haxe /path/to/haxe-4.3.7/haxe
 python3 -m bench run --cases cpp-socket,cpp-crossbyte,cpp-crossbyte-libuv \
-  --profile ci --wrk "$PWD/dependencies/wrk/wrk" --out out/local-cpp
+  --profile ci --wrk "$PWD/out/wrk/wrk" --out out/local-cpp
 ```
 
-On macOS, supply the installed OpenSSL prefix to `WITH_OPENSSL` (for example
-`/opt/homebrew/opt/openssl@3`) and use GNU make if needed. A smoke run validates
+On macOS, supply the installed OpenSSL prefix (for example
+`/opt/homebrew/opt/openssl@3` via `build-wrk --openssl`) and use
+`build-wrk --make gmake` if GNU make is needed. A smoke run validates
 behavior only. Choose a fresh output directory for each measurement; the harness
 refuses to overwrite existing results or bundles. All traffic is loopback, and
 cleanup signals only the process groups created by the harness, never `pkill`

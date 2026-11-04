@@ -19,6 +19,7 @@ from .config import ROOT, crossbyte_repository_name, load_config
 from .dependencies import sha256
 from .metrics import ProcessMeter
 from .report import write_reports
+from .loadgen import verify_wrk
 
 MARKER = "HXWELL_BENCH_JSON "
 
@@ -224,6 +225,8 @@ def parse_wrk(text):
     if len(markers) != 1:
         raise ValueError("wrk did not produce exactly one structured result")
     result = json.loads(markers[0])
+    if type(result.get("expected_status")) not in (int, float) or result["expected_status"] != 200:
+        raise ValueError("Missing native strict HTTP 200 status verification")
     for key in ("requests", "bytes"):
         value = result[key]
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0 or int(value) != value:
@@ -289,8 +292,9 @@ def run(config, lock, cases, bundles, output, profile_name, wrk, seed=1337, pin=
         raise ValueError("Request timeout must be a finite number in (0, 60] seconds")
     output, bundles = Path(output).resolve(), Path(bundles).resolve()
     output.mkdir(parents=True, exist_ok=False)
+    wrk, wrk_build = verify_wrk(wrk, lock)
     wrk_version = version([str(wrk), "--version"])
-    if not wrk_version or "4.2.0" not in wrk_version:
+    if not wrk_version or lock["load_generator"]["version"] not in wrk_version:
         raise ValueError(f"Need pinned wrk 4.2.0; found {wrk_version}")
     cpu = affinity(pin)
     workers = workers or (len(cpu["server"]) if cpu["enabled"] else 2)
@@ -301,9 +305,10 @@ def run(config, lock, cases, bundles, output, profile_name, wrk, seed=1337, pin=
     while any(count % threads for count in profile["connections"]):
         threads -= 1
     file_limits = ensure_file_limit(max(profile["connections"]))
-    report = {"schema_version": 1, "started_at": datetime.now(timezone.utc).isoformat(), "profile_name": profile_name,
+    report = {"schema_version": 2, "started_at": datetime.now(timezone.utc).isoformat(), "profile_name": profile_name,
               "profile": profile, "seed": seed, "hardware": hardware(), "affinity": cpu,
-              "settings": {"server_workers": workers, "client_threads": threads, "protocol": "HTTP/1.1", "middleware": "none", "compression": "identity",
+              "load_generator": wrk_build,
+              "settings": {"expected_http_status": 200, "server_workers": workers, "client_threads": threads, "protocol": "HTTP/1.1", "middleware": "none", "compression": "identity",
                            "request_timeout_seconds": timeout_seconds, "file_descriptor_limits": file_limits},
               "versions": {"wrk": wrk_version, "java": version(["java", "-version"]),
                            "node": version(["node", "--version"]), "repositories": lock["repositories"]},

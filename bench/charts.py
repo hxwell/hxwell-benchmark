@@ -61,6 +61,9 @@ def finite(value, positive=False):
 
 
 def validate_trial(trial):
+    from .validation import trial_http_200
+    if not trial_http_200(trial):
+        return False
     if trial.get("valid") is not True:
         return False
     try:
@@ -102,7 +105,7 @@ def dashboard(report, config, run, outcome, profile_name="ci", selection="all"):
              "finished_at": None, "rows": [], "status": "unavailable", "message": "No benchmark report was produced."}
     if report is not None:
         try:
-            if report.get("schema_version") != 1 or report["profile_name"] != profile_name or report["profile"] != profile:
+            if report.get("schema_version") != 2 or report["profile_name"] != profile_name or report["profile"] != profile:
                 raise ValueError("Report profile does not match this run.")
             if [case["id"] for case in report["selected_cases"]] != cases:
                 raise ValueError("Report case selection does not match this run.")

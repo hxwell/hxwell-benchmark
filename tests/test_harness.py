@@ -24,14 +24,14 @@ from bench.dependencies import sha256
 
 
 def measurement():
-    return {"duration_us": 2_000_000, "requests": 200, "bytes": 3000,
+    return {"expected_status": 200, "duration_us": 2_000_000, "requests": 200, "bytes": 3000,
             "latency_us": {"p50": 100, "p95": 200, "p99": 300, "max": 400, "mean": 120},
             "errors": {"connect": 0, "read": 0, "write": 0, "status": 0, "timeout": 0}}
 
 
 def trial(rate, valid=True):
     return {"case_id": "jvm-socket", "workload": "plaintext", "connections": 4, "valid": valid,
-            "rps": rate, "wrk": measurement(), "server": {"available": False}, "error": "timeout" if not valid else ""}
+            "rps": rate, "wrk": measurement(), "warmup": {"wrk": measurement()}, "server": {"available": False}, "error": "timeout" if not valid else ""}
 
 
 class HarnessTests(unittest.TestCase):

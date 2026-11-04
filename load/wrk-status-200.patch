@@ -1,0 +1,45 @@
+--- a/src/wrk.h
++++ b/src/wrk.h
+@@ -16,6 +16,7 @@
+ #include "ae.h"
+ #include "http_parser.h"
+ 
++#define HXWELL_EXPECTED_STATUS 200
+ #define RECVBUF  8192
+ 
+ #define MAX_THREAD_RATE_S   10000000
+--- a/src/wrk.c
++++ b/src/wrk.c
+@@ -184,7 +184,7 @@
+     }
+ 
+     if (errors.status) {
+-        printf("  Non-2xx or 3xx responses: %d\n", errors.status);
++        printf("  Non-200 responses: %d\n", errors.status);
+     }
+ 
+     printf("Requests/sec: %9.2Lf\n", req_per_s);
+@@ -330,7 +330,7 @@
+     thread->complete++;
+     thread->requests++;
+ 
+-    if (status > 399) {
++    if (status != HXWELL_EXPECTED_STATUS) {
+         thread->errors.status++;
+     }
+ 
+--- a/src/script.c
++++ b/src/script.c
+@@ -210,10 +210,12 @@
+ }
+ 
+ void script_summary(lua_State *L, uint64_t duration, uint64_t requests, uint64_t bytes) {
++    uint64_t expected_status = HXWELL_EXPECTED_STATUS;
+     const table_field fields[] = {
+         { "duration", LUA_TNUMBER, &duration },
+         { "requests", LUA_TNUMBER, &requests },
+         { "bytes",    LUA_TNUMBER, &bytes    },
++        { "expected_status", LUA_TNUMBER, &expected_status },
+         { NULL,       0,           NULL      },
+     };
+     lua_newtable(L);

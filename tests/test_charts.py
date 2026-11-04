@@ -29,11 +29,12 @@ def report(profile="ci", selection=None):
             for count in profile_data["connections"]:
                 for repetition in range(1, profile_data["repetitions"] + 1):
                     trials.append({"case_id": case["id"], "workload": workload["id"], "connections": count, "repetition": repetition,
-                        "valid": True, "rps": 999999, "wrk": {"requests": 100 * repetition, "duration_us": 1_000_000,
+                        "valid": True, "rps": 999999, "wrk": {"expected_status": 200, "requests": 100 * repetition, "duration_us": 1_000_000,
                         "errors": {"connect": 0, "read": 0, "write": 0, "status": 0, "timeout": 0},
                         "latency_us": {"p50": 10, "p95": 20, "p99": 30 * repetition, "max": 100}},
+                        "warmup": {"wrk": {"expected_status": 200, "errors": {"connect": 0, "read": 0, "write": 0, "status": 0, "timeout": 0}}},
                         "server": {"peak_group_rss_bytes": repetition * 1048576}, "client_saturated": False})
-    return {"schema_version": 1, "profile_name": profile, "profile": profile_data, "selected_cases": cases,
+    return {"schema_version": 2, "profile_name": profile, "profile": profile_data, "selected_cases": cases,
             "expected_trials": len(trials), "trials": trials, "success": True, "finished_at": "2026-11-01T03:35:07+00:00",
             "hardware": {"cpu_model": "fixture"}, "summary": [{"rps_median": 999999}]}
 
@@ -88,6 +89,15 @@ class ChartTests(unittest.TestCase):
             self.assertFalse(data["rows"][0]["valid"])
             self.assertEqual("incomplete", data["status"])
 
+    def test_legacy_reports_cannot_be_rescored_as_strict_http_200(self):
+        source = report()
+        source["schema_version"] = 1
+        for trial in source["trials"]:
+            trial["wrk"].pop("expected_status")
+        data = dashboard(source, config(), metadata(), "success")
+        self.assertEqual("unavailable", data["status"])
+        self.assertEqual(0, data["scored_trials"])
+
     def test_failed_job_is_not_published_as_complete(self):
         data = dashboard(report(), config(), metadata(), "failure")
         self.assertEqual("incomplete", data["status"])
@@ -95,7 +105,7 @@ class ChartTests(unittest.TestCase):
 
     def test_warmup_errors_never_receive_a_performance_score(self):
         source = report()
-        source["trials"][0]["warmup"] = {"wrk": {"errors": {"connect": 0, "read": 22, "write": 0, "status": 0, "timeout": 0}}}
+        source["trials"][0]["warmup"] = {"wrk": {"expected_status": 200, "errors": {"connect": 0, "read": 22, "write": 0, "status": 0, "timeout": 0}}}
         data = dashboard(source, config(), metadata(), "success")
         self.assertEqual("incomplete", data["status"])
         self.assertEqual(7, data["valid_trials"])

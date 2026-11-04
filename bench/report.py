@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import statistics
 
+from .validation import trial_http_200
+
 
 def summarize(trials, expected_repetitions):
     groups = {}
@@ -11,7 +13,7 @@ def summarize(trials, expected_repetitions):
         groups.setdefault(key, []).append(trial)
     rows = []
     for (case, workload, connections), samples in sorted(groups.items()):
-        valid = len(samples) == expected_repetitions and all(sample.get("valid") for sample in samples)
+        valid = len(samples) == expected_repetitions and all(sample.get("valid") and trial_http_200(sample) for sample in samples)
         row = {"case": case, "workload": workload, "connections": connections, "valid": valid,
                "samples": len(samples), "expected_samples": expected_repetitions}
         if valid:
@@ -24,7 +26,7 @@ def summarize(trials, expected_repetitions):
             row["peak_group_rss_mib"] = max(memory) / 1048576 if all(value is not None for value in memory) else None
             row["client_saturated"] = any(sample.get("client_saturated", False) for sample in samples)
         else:
-            row["errors"] = "; ".join(sample.get("error", "") for sample in samples if not sample.get("valid")) or "missing repetitions"
+            row["errors"] = "; ".join(sample.get("error", "") for sample in samples if not sample.get("valid")) or "missing repetitions or unverified/non-200 HTTP responses"
         rows.append(row)
     return rows
 
