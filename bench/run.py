@@ -141,6 +141,8 @@ def verify_bundle(bundle, case):
     metadata = json.loads((bundle / "build.json").read_text())
     if metadata.get("haxe_version") != case.get("haxe_version", "4.3.7"):
         raise ValueError("Build compiler provenance does not match the requested case")
+    if metadata.get("haxelib_source_checksums") != load_config()[1].get("haxelib_source_checksums", {}):
+        raise ValueError("Haxelib source provenance does not match the current lock")
     if metadata["case"] != case:
         raise ValueError("Build metadata does not match requested case")
     if metadata["build_os"] != platform.system() or metadata["build_arch"] != platform.machine():

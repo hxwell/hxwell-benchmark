@@ -1,10 +1,12 @@
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
 from bench.build import build
+from bench.dependencies import library_path, sha256
 from bench.config import compiler_version, load_config
 from bench.run import validate_health
 
@@ -44,3 +46,18 @@ class Haxe5Tests(unittest.TestCase):
                 (root / "benchmark.json").write_text(json.dumps({**config, "cases": [{**preview, **change}]}))
                 with patch("bench.config.ROOT", root), self.assertRaises(ValueError):
                     load_config()
+
+    def test_modified_haxelib_package_is_rejected_even_when_version_matches(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            package = root / "haxe-concurrent/5,1,5"
+            package.mkdir(parents=True)
+            (package / "haxelib.json").write_text('{"version":"5.1.5"}')
+            source = package / "source.hx"
+            source.write_text("original")
+            hashes = {"source.hx": sha256(source)}
+            with patch.dict(os.environ, {"BENCH_HAXELIB_REPO": str(root)}):
+                self.assertEqual(package.resolve(), library_path("haxe-concurrent", "5.1.5", hashes))
+                source.write_text("locally patched")
+                with self.assertRaisesRegex(ValueError, "Modified haxe-concurrent"):
+                    library_path("haxe-concurrent", "5.1.5", hashes)

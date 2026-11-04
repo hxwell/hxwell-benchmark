@@ -68,7 +68,8 @@ reports are saved separately from the performance results.
 It uses the same adapter source, upstream Crossbyte commit, Java 21, heap limits,
 request limits and I/O settings as `jvm-crossbyte` (Haxe 4.3.7). A Haxe-5-only
 classpath supplies type aliases for moved Java primitive/class helpers and the
-legacy HTTP/2 secondary-type name; the runtime SDK is not patched. `/health`
+legacy HTTP/2 secondary-type name, plus a `HashMap.size()` extension for the
+unmodified haxe-concurrent 5.1.5 package; the runtime SDK is not patched. `/health`
 embeds the real compiler version through a compile-time macro and must agree
 with the build provenance. Both cases already hand requests to HxWell's
 `jvm.thread.VirtualThread.create(work).start()` entry before `HttpHandler.process()`.
@@ -161,6 +162,9 @@ per-response callback. The native summary must attest `expected_status: 200`;
 missing evidence, any non-200 response in warmup or measurement, or a mismatched
 client build invalidates the trial and prevents a performance score. Both the
 client binary and patch hashes are verified and retained in `results.json`.
+The locked haxe-concurrent synchronized-map source checksum also rejects locally patched copies
+with the same package version. For a private Haxelib installation, set
+`BENCH_HAXELIB_REPO` to that repository directory.
 Reports use schema version 2. Run #23 and earlier used the previous `>399`
 status counter; their historical charts do not prove that every load response
 was 200. Those legacy reports cannot receive scores from the new publisher.
@@ -198,7 +202,7 @@ are retained separately from the older-driver comparisons below.
 ## Historical JVM virtual-runtime comparisons
 
 These archived comparisons used adapter commit `c08ad42`. The current benchmark
-uses adapter `a010ebf`, which retains the small-response path introduced in `58d39ce` and sends a complete
+uses adapter `8dca380`, which retains the small-response path introduced in `58d39ce` and sends a complete
 response in one asynchronous runtime handoff. The upstream and virtual-I/O
 cases both use that updated adapter with the same limits. Current measurements
 are in the generated charts above; the archived numbers below describe the old

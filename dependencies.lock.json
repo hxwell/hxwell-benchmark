@@ -2,11 +2,11 @@
   "repositories": {
     "hxwell": {
       "url": "https://github.com/hxwell/hxwell.git",
-      "revision": "4a868cdedc3f466acf00903b1f6f61dbffc44b26"
+      "revision": "d2dba6f785af66c44171539651a494f9cb6bec25"
     },
     "hxwell-crossbyte": {
       "url": "https://github.com/hxwell/hxwell-crossbyte.git",
-      "revision": "a010ebfaaf6f9aaa4d3133de56e0c80f127ad843",
+      "revision": "8dca380416689ae24400176b3909e20c09ef9e63",
       "vendored": true
     },
     "crossbyte": {
@@ -78,6 +78,11 @@
     "patch": {
       "path": "load/wrk-status-200.patch",
       "sha256": "5cda1f28f8228912a7466f485870259019d36283377d9d99fb14aae77e19b21d"
+    }
+  },
+  "haxelib_source_checksums": {
+    "haxe-concurrent": {
+      "src/hx/concurrent/collection/SynchronizedMap.hx": "4c91f9d2329fbb847e08a401cb3bf72db167592abf7cc1032987609913131c94"
     }
   }
 }

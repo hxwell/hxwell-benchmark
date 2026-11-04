@@ -36,7 +36,8 @@ class VirtualCrossbyteTests(unittest.TestCase):
                 root = Path(directory)
                 (root / "server.jar").write_bytes(b"fixture, never executed")
                 source = crossbyte_repository_name(case)
-                metadata = {"case": case, "haxe_version": case.get("haxe_version", "4.3.7"), "build_os": platform.system(), "build_arch": platform.machine(),
+                metadata = {"haxelib_source_checksums": lock.get("haxelib_source_checksums", {}),
+                            "case": case, "haxe_version": case.get("haxe_version", "4.3.7"), "build_os": platform.system(), "build_arch": platform.machine(),
                             "workloads_sha256": sha256(Path(__file__).resolve().parents[1] / "benchmark.json"),
                             "files": {"server.jar": sha256(root / "server.jar")},
                             "crossbyte_repository": lock["repositories"][source],

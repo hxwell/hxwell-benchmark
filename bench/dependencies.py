@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -77,14 +78,17 @@ def fetch(lock, directory, names):
                 fetch_repository(directory / name, spec)
 
 
-def library_path(name, version):
-    repository = Path(capture(["haxelib", "config"], cwd=ROOT))
+def library_path(name, version, checksums=None):
+    repository = Path(os.environ["BENCH_HAXELIB_REPO"]) if os.environ.get("BENCH_HAXELIB_REPO") else Path(capture(["haxelib", "config"], cwd=ROOT))
     path = repository / name.replace(".", ",") / version.replace(".", ",")
     if not path.exists():
         path = Path(capture(["haxelib", "libpath", name], cwd=ROOT))
     metadata = json.loads((path / "haxelib.json").read_text())
     if metadata["version"] != version:
         raise ValueError(f"Need {name} {version}; found {metadata['version']} at {path}")
+    for relative, expected in (checksums or {}).items():
+        if not (path / relative).is_file() or sha256(path / relative) != expected:
+            raise ValueError(f"Modified {name} {version} source: {relative}; select a clean package with BENCH_HAXELIB_REPO")
     return path.resolve()
 
 
@@ -96,7 +100,7 @@ def local_haxelib(work, deps, lock, case):
         names += ["hx4compat"]
     if case["target"] == "js":
         names += ["hxnodejs"]
-    libraries = {name: library_path(name, lock["haxelib"][name]) for name in names}
+    libraries = {name: library_path(name, lock["haxelib"][name], lock.get("haxelib_source_checksums", {}).get(name)) for name in names}
     repositories = ["hxwell"]
     if case["target"] == "cpp":
         repositories += ["libhxcpp"]

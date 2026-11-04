@@ -107,6 +107,7 @@ def build(config, lock, case, deps, output, haxe="haxe"):
                 "build_seconds": time.monotonic() - started, "build_os": platform.system(), "build_arch": platform.machine(),
                 "repositories": lock["repositories"], "libraries": libraries, "native_libraries": native_libraries, "files": files,
                 "build_command": args, "workloads_sha256": sha256(ROOT / "benchmark.json"),
+                "haxelib_source_checksums": lock.get("haxelib_source_checksums", {}),
                 "crossbyte_repository": lock["repositories"][crossbyte_repository_name(case)] if case["driver"] == "crossbyte" else None}
     (destination / "build.json").write_text(json.dumps(metadata, indent=2) + "\n")
     shutil.copy2(work / "build.log", destination / "build.log")

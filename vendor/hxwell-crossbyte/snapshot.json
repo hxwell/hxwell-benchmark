@@ -1,9 +1,10 @@
 {
   "repository": "https://github.com/hxwell/hxwell-crossbyte.git",
-  "revision": "a010ebfaaf6f9aaa4d3133de56e0c80f127ad843",
+  "revision": "8dca380416689ae24400176b3909e20c09ef9e63",
   "files": {
     "LICENSE": "e83404c7b618ea088f45c2e048105e40e371317ecc2e2b723e724f81a9424310",
     "compat/haxe5/H2ServerConnection.hx": "68147b4c2c21a34a82a14aae378880b05964e1c541d3d58a7de7e60fd871538b",
+    "compat/haxe5/hx/well/http/driver/crossbyte/compat/HashMapTools.hx": "c6a913574c54555fcd8eedf6e1d5e7c16b70aa631c2a7aa3bad71e918b5db9aa",
     "compat/haxe5/java/Lib.hx": "c2434b89f220a1859c78b189e1caa46f004898de6e545808bd771e2eb5b4f98d",
     "compat/haxe5/java/StdTypes.hx": "dff9650e4cfd6d19ce7e9da853f17c6d278cc4641dc54f95e6cf211c3fbf8f7a",
     "compat/haxe5/java/types/Char16.hx": "5622892ec6123394226eb748dbabe5dbba7bf4ea6af8950aa6b5f67a58a25721",
@@ -24,6 +25,6 @@
     "src/hx/well/http/driver/crossbyte/internal/UpstreamWebSocket.hx": "77412ca084ffd571fc5de85acc9338db2ba1179801f6643e1485e649a49fa7fe",
     "src/hx/well/http/driver/crossbyte/internal/WebSocketBridge.hx": "97679360cc54c81e87070f8da20270a647a45860e669e37e12ae4b2e5d8e3a2b",
     "src/hx/well/http/driver/crossbyte/internal/WorkerPool.hx": "fd8c7911c2971cd24ed0bc70b219fc77fd45b3498786a06a03c14c928da46fe6",
-    "src/hx/well/http/driver/crossbyte/macro/Compatibility.hx": "f31a2348bbc35ea05e0cc47bdaebbda8784701c6d168e2fc8e9a803ae19ee61d"
+    "src/hx/well/http/driver/crossbyte/macro/Compatibility.hx": "635806af030cf76e1d47efc0234371dd0c67b9b776fce00675e17661d1a64ba5"
   }
 }
