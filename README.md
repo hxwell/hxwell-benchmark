@@ -3,26 +3,26 @@
 <!-- benchmark-charts:start -->
 ## Summary
 
-**Complete** · [Run #27 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/41872715214) · profile `stress` · 81/81 valid trials.
-Source: [`8e40993`](https://github.com/hxwell/hxwell-benchmark/commit/8e409938c557171b077b9286d31fba60d5f0902b). Finished: `2026-11-04T17:26:03.172394+00:00`.
+**Complete** · [Run #28 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/41881955557) · profile `stress` · 81/81 valid trials.
+Source: [`36484c4`](https://github.com/hxwell/hxwell-benchmark/commit/36484c4a84ac6482c7f464a4137af6509c04b694). Finished: `2026-11-04T18:24:56.500614+00:00`.
 
 All selected measurements passed.
 
-![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=41872715214-1&layout=4)
+![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=41881955557-1&layout=4)
 
 Each chart shows throughput, p99 latency and peak RSS for plaintext, JSON and echo. Case colors are consistent across views; each target uses its own axis scales for detail. Workloads and connection levels remain separate.
 
 ## JVM
 
-![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=41872715214-1&layout=4)
+![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=41881955557-1&layout=4)
 
 ## JavaScript / Node
 
-![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=41872715214-1&layout=4)
+![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=41881955557-1&layout=4)
 
-## C++ / libhxcpp
+## C++ / libhxcpp / LTO
 
-![C++ / libhxcpp benchmark results](docs/benchmarks/latest/target-cpp.svg?run=41872715214-1&layout=4)
+![C++ / libhxcpp / LTO benchmark results](docs/benchmarks/latest/target-cpp.svg?run=41881955557-1&layout=4)
 
 [Chart data and provenance](docs/benchmarks/latest/manifest.json) · Full raw results are in the linked run's `benchmark-results` artifact.
 Only the selected targets, cases and connection levels from this run are shown; older runs are not mixed into these charts.
