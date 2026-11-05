@@ -282,7 +282,7 @@ compare implementations within each run rather than absolute RPS between runs.
 | Profile | Warmup per trial | Measurement | Repetitions | Connections | Request timeout | Use |
 | --- | ---: | ---: | ---: | --- | ---: | --- |
 | `smoke` | 1 s | 1 s | 1 | 4 | 2 s | Harness validation only; used for PRs |
-| `ci` | 3 s | 5 s | 3 | 32 | 2 s | Default push/manual run |
+| `ci` | 3 s | 5 s | 3 | 1000 | 10 s | Default push/manual run |
 | `full` | 5 s | 10 s | 3 | 16, 128 | 2 s | Longer manual comparison |
 | `stress` | 5 s | 10 s | 3 | 1000 | 10 s | High-concurrency manual run |
 
@@ -291,11 +291,14 @@ Defaults are in `benchmark.json`. Full runs are bounded by the workflow's
 do not run on a recurring schedule. In manual dispatch, choose a profile and
 `all` or a comma-separated list of the case IDs above.
 
-`stress` maintains **1,000 concurrent HTTP/1.1 connections** for every selected
-case and workload. Throughput is measured independently in requests/second.
+Both the default `ci` profile and `stress` maintain **1,000 concurrent HTTP/1.1
+connections** for every selected case and workload. Pushes to `main` and manual
+runs therefore use 1,000 connections by default. Throughput is measured
+independently in requests/second.
 The longer request timeout allows queueing under this load; errors/timeouts still
-invalidate a trial. Running all nine cases produces 81 trials and about 20 minutes
-of warmup/load, plus startup and reporting. The README and charts are updated by
+invalidate a trial. Running all nine cases produces 81 trials, with about
+11 minutes of warmup/load for `ci` or 20 minutes for `stress`, plus startup and
+reporting. The README and charts are updated by
 the selected profile's completed main-branch run.
 
 Before starting the servers and clients, the harness checks the process file
