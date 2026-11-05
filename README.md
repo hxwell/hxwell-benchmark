@@ -3,26 +3,26 @@
 <!-- benchmark-charts:start -->
 ## Summary
 
-**Complete** · [Run #29 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/41890450221) · profile `ci` · 81/81 valid trials.
-Source: [`8ac8685`](https://github.com/hxwell/hxwell-benchmark/commit/8ac86857aba8cc905a961b371a1c55c494cbb269). Finished: `2026-11-04T19:05:39.087097+00:00`.
+**Complete** · [Run #30 (attempt 1)](https://github.com/hxwell/hxwell-benchmark/actions/runs/42112041903) · profile `ci` · 81/81 valid trials.
+Source: [`0fe69f6`](https://github.com/hxwell/hxwell-benchmark/commit/0fe69f6a9f8a5557bec10e24f3b5290740be055e). Finished: `2026-11-05T21:45:10.567586+00:00`.
 
 All selected measurements passed.
 
-![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=41890450221-1&layout=4)
+![Summary: all targets, throughput, p99 latency and memory](docs/benchmarks/latest/summary.svg?run=42112041903-1&layout=4)
 
 Each chart shows throughput, p99 latency and peak RSS for plaintext, JSON and echo. Case colors are consistent across views; each target uses its own axis scales for detail. Workloads and connection levels remain separate.
 
 ## JVM
 
-![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=41890450221-1&layout=4)
+![JVM benchmark results](docs/benchmarks/latest/target-jvm.svg?run=42112041903-1&layout=4)
 
 ## JavaScript / Node
 
-![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=41890450221-1&layout=4)
+![JavaScript / Node benchmark results](docs/benchmarks/latest/target-js.svg?run=42112041903-1&layout=4)
 
 ## C++ / libhxcpp / LTO
 
-![C++ / libhxcpp / LTO benchmark results](docs/benchmarks/latest/target-cpp.svg?run=41890450221-1&layout=4)
+![C++ / libhxcpp / LTO benchmark results](docs/benchmarks/latest/target-cpp.svg?run=42112041903-1&layout=4)
 
 [Chart data and provenance](docs/benchmarks/latest/manifest.json) · Full raw results are in the linked run's `benchmark-results` artifact.
 Only the selected targets, cases and connection levels from this run are shown; older runs are not mixed into these charts.
